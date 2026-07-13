@@ -27,7 +27,11 @@ Deno.serve(async (req) => {
   }
 
   const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-  const siteUrl = (Deno.env.get("SITE_URL") ?? "").replace(/\/$/, "");
+  // SITE_URL surchargeable en secret (domaine personnalisé futur).
+  const siteUrl = (
+    Deno.env.get("SITE_URL") ??
+    "https://imperator080599-oss.github.io/Site-Flashcards-Anki"
+  ).replace(/\/$/, "");
   if (!stripeKey || !siteUrl) {
     return json(503, {
       error:

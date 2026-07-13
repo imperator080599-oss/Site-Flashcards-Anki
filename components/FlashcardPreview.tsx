@@ -71,8 +71,11 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
 }
 
 export function FlashcardPreview({ cards }: { cards: SampleCard[] }) {
+  // Une seule carte (ex. hero) : pleine largeur ; sinon grille responsive.
+  const columns =
+    cards.length === 1 ? "" : "lg:grid-cols-2 xl:grid-cols-3";
   return (
-    <div className="grid gap-5 lg:grid-cols-2 xl:grid-cols-3">
+    <div className={`grid gap-5 ${columns}`}>
       {cards.map((card, i) => (
         <Flashcard key={i} card={card} index={i} />
       ))}

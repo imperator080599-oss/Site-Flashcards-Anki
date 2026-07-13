@@ -89,13 +89,13 @@ export function CatalogBrowser({
           />
         </label>
 
-        <div className="flex gap-3">
-          <label>
+        <div className="flex min-w-0 gap-3">
+          <label className="min-w-0 flex-1 sm:flex-none">
             <span className="sr-only">Filtrer par catégorie</span>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="h-10 rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent"
+              className="h-10 w-full rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent sm:w-auto"
             >
               <option value="all">Toutes les catégories</option>
               {categories.map((c) => (
@@ -106,12 +106,12 @@ export function CatalogBrowser({
             </select>
           </label>
 
-          <label>
+          <label className="min-w-0 flex-1 sm:flex-none">
             <span className="sr-only">Trier</span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortKey)}
-              className="h-10 rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent"
+              className="h-10 w-full rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent sm:w-auto"
             >
               {Object.entries(sortLabels).map(([key, label]) => (
                 <option key={key} value={key}>

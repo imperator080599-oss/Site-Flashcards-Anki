@@ -22,6 +22,9 @@ env:
   NEXT_PUBLIC_SITE_URL: https://imperator080599-oss.github.io/Site-Flashcards-Anki
   NEXT_PUBLIC_BASE_PATH: /Site-Flashcards-Anki
   NEXT_PUBLIC_CONTACT_EMAIL: imperator080599@gmail.com
+  # Valeurs publiques par conception (embarquées dans le bundle client).
+  NEXT_PUBLIC_SUPABASE_URL: https://qgmtqxnopnffzcnigcpv.supabase.co
+  NEXT_PUBLIC_SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnbXRxeG5vcG5mZnpjbmlnY3B2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM5NjM1MjcsImV4cCI6MjA5OTUzOTUyN30.52VB2_oc-OO0n_J4eXzaM6NeWBvh6oAdt0TKmoaLI7k
 
 jobs:
   build:
@@ -66,3 +69,41 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Vérifie que le backend répond comme attendu (états d'erreur contrôlés).
+  smoke-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create-checkout répond (503 tant que Stripe n'est pas configuré, 200 ensuite)
+        run: |
+          code=$(curl -s -o /tmp/r.json -w "%{http_code}" -X POST \
+            "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/create-checkout" \
+            -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"deckSlug":"dcg-ue9-comptabilite","successUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/decks/"}')
+          cat /tmp/r.json; echo
+          [ "$code" = "503" ] || [ "$code" = "200" ] || { echo "Code inattendu: $code"; exit 1; }
+      - name: download rejette un jeton invalide (400)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/download?token=abc")
+          [ "$code" = "400" ] || { echo "Code inattendu: $code"; exit 1; }
+      - name: download rejette un jeton inconnu (404)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" \
+            "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/download?token=00000000-0000-4000-8000-000000000000")
+          [ "$code" = "404" ] || { echo "Code inattendu: $code"; exit 1; }
+      - name: confirm-order rejette une référence invalide (400)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/confirm-order" \
+            -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
+            -H "Content-Type: application/json" \
+            -d '{"sessionId":"nope"}')
+          [ "$code" = "400" ] || { echo "Code inattendu: $code"; exit 1; }
+      - name: stripe-webhook exige une signature valide (400/503)
+        run: |
+          code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
+            "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/stripe-webhook" \
+            -H "Content-Type: application/json" -d '{}')
+          [ "$code" = "400" ] || [ "$code" = "503" ] || { echo "Code inattendu: $code"; exit 1; }
