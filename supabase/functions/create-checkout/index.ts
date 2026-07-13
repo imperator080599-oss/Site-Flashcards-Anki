@@ -1,0 +1,123 @@
+// Edge Function « create-checkout » : crée une session Stripe Checkout pour
+// un deck. Le prix provient exclusivement de la base (jamais du client).
+import { createClient } from "jsr:@supabase/supabase-js@2";
+
+const CORS_HEADERS = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+};
+
+function json(status: number, body: unknown): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+  });
+}
+
+const SLUG_RE = /^[a-z0-9-]{1,100}$/;
+
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") {
+    return new Response(null, { status: 204, headers: CORS_HEADERS });
+  }
+  if (req.method !== "POST") {
+    return json(405, { error: "Méthode non autorisée." });
+  }
+
+  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const siteUrl = (Deno.env.get("SITE_URL") ?? "").replace(/\/$/, "");
+  if (!stripeKey || !siteUrl) {
+    return json(503, {
+      error:
+        "Le paiement en ligne n'est pas encore activé. Réessayez prochainement.",
+      code: "payments_not_configured",
+    });
+  }
+
+  let body: { deckSlug?: unknown; successUrl?: unknown; cancelUrl?: unknown };
+  try {
+    body = await req.json();
+  } catch {
+    return json(400, { error: "Requête invalide.", code: "invalid" });
+  }
+
+  const { deckSlug, successUrl, cancelUrl } = body;
+  if (typeof deckSlug !== "string" || !SLUG_RE.test(deckSlug)) {
+    return json(400, { error: "Deck invalide.", code: "invalid" });
+  }
+  // Les URLs de retour doivent pointer vers notre site (anti-redirection).
+  if (
+    typeof successUrl !== "string" ||
+    typeof cancelUrl !== "string" ||
+    !successUrl.startsWith(siteUrl) ||
+    !cancelUrl.startsWith(siteUrl)
+  ) {
+    return json(400, { error: "URL de retour invalide.", code: "invalid" });
+  }
+
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  );
+
+  const { data: deck, error: deckError } = await supabase
+    .from("decks")
+    .select("slug, title, price_cents, currency")
+    .eq("slug", deckSlug)
+    .eq("active", true)
+    .single();
+
+  if (deckError || !deck) {
+    return json(404, { error: "Ce deck n'est pas disponible.", code: "not_found" });
+  }
+
+  // Création de la session Checkout via l'API REST Stripe.
+  const params = new URLSearchParams({
+    mode: "payment",
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    "line_items[0][quantity]": "1",
+    "line_items[0][price_data][currency]": deck.currency,
+    "line_items[0][price_data][unit_amount]": String(deck.price_cents),
+    "line_items[0][price_data][product_data][name]": deck.title,
+    "line_items[0][price_data][product_data][description]":
+      "Deck de flashcards Anki (fichier .apkg, téléchargement immédiat)",
+    "metadata[deck_slug]": deck.slug,
+    "payment_intent_data[description]": `Deck Anki : ${deck.title}`,
+  });
+
+  const stripeResponse = await fetch(
+    "https://api.stripe.com/v1/checkout/sessions",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${stripeKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: params,
+    }
+  );
+
+  const session = await stripeResponse.json();
+  if (!stripeResponse.ok || !session?.id || !session?.url) {
+    console.error("Stripe error:", session?.error?.message ?? session);
+    return json(502, {
+      error: "Le paiement est momentanément indisponible. Réessayez.",
+    });
+  }
+
+  const { error: orderError } = await supabase.from("orders").insert({
+    stripe_session_id: session.id,
+    deck_slug: deck.slug,
+    amount_total: deck.price_cents,
+    currency: deck.currency,
+    status: "pending",
+  });
+  if (orderError) {
+    console.error("Order insert error:", orderError.message);
+  }
+
+  return json(200, { url: session.url });
+});

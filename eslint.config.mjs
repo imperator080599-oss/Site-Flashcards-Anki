@@ -24,6 +24,8 @@ const eslintConfig = [
       "out/**",
       "build/**",
       "next-env.d.ts",
+      // Edge Functions Deno : hors du périmètre ESLint/tsc Node.
+      "supabase/functions/**",
     ],
   },
 ];

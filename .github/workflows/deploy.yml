@@ -1,0 +1,68 @@
+# Build et déploiement du site statique sur GitHub Pages.
+#
+# Les variables NEXT_PUBLIC_* sont publiques par conception (elles sont
+# de toute façon incluses dans le bundle client). Aucun secret ici.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [claude/anki-deck-ecommerce-9nko5v]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  NEXT_PUBLIC_SITE_URL: https://imperator080599-oss.github.io/Site-Flashcards-Anki
+  NEXT_PUBLIC_BASE_PATH: /Site-Flashcards-Anki
+  NEXT_PUBLIC_CONTACT_EMAIL: imperator080599@gmail.com
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Build (static export)
+        run: npm run build
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      - name: Upload site artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
