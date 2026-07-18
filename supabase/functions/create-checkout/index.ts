@@ -27,12 +27,16 @@ Deno.serve(async (req) => {
   }
 
   const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
-  // SITE_URL surchargeable en secret (domaine personnalisé futur).
-  const siteUrl = (
+  // Origines autorisées pour les URLs de retour. Surchargeable via le
+  // secret SITE_URL (liste séparée par des virgules — domaine personnalisé).
+  const allowedOrigins = (
     Deno.env.get("SITE_URL") ??
-    "https://imperator080599-oss.github.io/Site-Flashcards-Anki"
-  ).replace(/\/$/, "");
-  if (!stripeKey || !siteUrl) {
+    "https://rappel-anki.vercel.app,https://imperator080599-oss.github.io/Site-Flashcards-Anki"
+  )
+    .split(",")
+    .map((u) => u.trim().replace(/\/$/, ""))
+    .filter(Boolean);
+  if (!stripeKey || allowedOrigins.length === 0) {
     return json(503, {
       error:
         "Le paiement en ligne n'est pas encore activé. Réessayez prochainement.",
@@ -52,12 +56,10 @@ Deno.serve(async (req) => {
     return json(400, { error: "Deck invalide.", code: "invalid" });
   }
   // Les URLs de retour doivent pointer vers notre site (anti-redirection).
-  if (
-    typeof successUrl !== "string" ||
-    typeof cancelUrl !== "string" ||
-    !successUrl.startsWith(siteUrl) ||
-    !cancelUrl.startsWith(siteUrl)
-  ) {
+  const isAllowed = (url: unknown): boolean =>
+    typeof url === "string" &&
+    allowedOrigins.some((origin) => url.startsWith(origin));
+  if (!isAllowed(successUrl) || !isAllowed(cancelUrl)) {
     return json(400, { error: "URL de retour invalide.", code: "invalid" });
   }
 
@@ -80,8 +82,8 @@ Deno.serve(async (req) => {
   // Création de la session Checkout via l'API REST Stripe.
   const params = new URLSearchParams({
     mode: "payment",
-    success_url: successUrl,
-    cancel_url: cancelUrl,
+    success_url: successUrl as string,
+    cancel_url: cancelUrl as string,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": deck.currency,
     "line_items[0][price_data][unit_amount]": String(deck.price_cents),
