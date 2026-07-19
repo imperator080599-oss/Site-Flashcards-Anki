@@ -94,14 +94,14 @@ jobs:
           code=$(curl -s -o /dev/null -w "%{http_code}" \
             "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/download?token=00000000-0000-4000-8000-000000000000")
           [ "$code" = "404" ] || { echo "Code inattendu: $code"; exit 1; }
-      - name: confirm-order rejette une référence invalide (400)
+      - name: confirm-order rejette une référence invalide (400, ou 503 avant Stripe)
         run: |
           code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
             "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/confirm-order" \
             -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
             -H "Content-Type: application/json" \
             -d '{"sessionId":"nope"}')
-          [ "$code" = "400" ] || { echo "Code inattendu: $code"; exit 1; }
+          [ "$code" = "400" ] || [ "$code" = "503" ] || { echo "Code inattendu: $code"; exit 1; }
       - name: stripe-webhook exige une signature valide (400/503)
         run: |
           code=$(curl -s -o /dev/null -w "%{http_code}" -X POST \
