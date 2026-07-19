@@ -22,6 +22,22 @@ function json(status: number, body: unknown): Response {
 
 const SESSION_RE = /^cs_(test|live)_[a-zA-Z0-9]{10,200}$/;
 
+/** Secret depuis l'environnement, sinon depuis la table app_config (RLS service_role). */
+async function getSecret(
+  supabase: ReturnType<typeof createClient>,
+  key: string
+): Promise<string | null> {
+  const envValue = Deno.env.get(key);
+  if (envValue) return envValue;
+  const { data } = await supabase
+    .from("app_config")
+    .select("value")
+    .eq("key", key)
+    .single();
+  return (data as { value: string } | null)?.value ?? null;
+}
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
@@ -30,7 +46,12 @@ Deno.serve(async (req) => {
     return json(405, { error: "Méthode non autorisée." });
   }
 
-  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  );
+
+  const stripeKey = await getSecret(supabase, "STRIPE_SECRET_KEY");
   if (!stripeKey) {
     return json(503, {
       error: "Le paiement en ligne n'est pas encore activé.",
@@ -58,11 +79,6 @@ Deno.serve(async (req) => {
   if (!stripeResponse.ok || !session?.id) {
     return json(404, { error: "Commande introuvable.", code: "not_found" });
   }
-
-  const supabase = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  );
 
   const deckSlug: string | null = session.metadata?.deck_slug ?? null;
   if (!deckSlug) {

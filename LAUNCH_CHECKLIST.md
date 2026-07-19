@@ -6,7 +6,19 @@ Le site est **en ligne** : https://imperator080599-oss.github.io/Site-Flashcards
 activé » tant que Stripe n'est pas branché. Voici, dans l'ordre, ce qu'il
 vous reste à faire.
 
-## 1. Activer les paiements Stripe (~15 min)
+> **État au 19/07/2026** : les étapes 1 (Stripe, en mode **test**) et 2
+> (fichiers des decks) sont **faites**. La clé `sk_test_…` et le secret du
+> webhook (`we_1TuxeyDQg5fciZAs1GKfajgh`) sont stockés dans la table
+> `app_config` (verrouillée par RLS, lue uniquement par les Edge Functions).
+> 27 de vos 29 decks Drive sont dans le bucket `deck-files` sous `drive/` ;
+> les 2 fichiers trop volumineux pour l'import automatique (« Espagnol 3000
+> phrases », 327 Mo, et « mathkang », 208 Mo) restent à glisser-déposer dans
+> le bucket si besoin. Pour passer en production : remplacez la valeur
+> `STRIPE_SECRET_KEY` dans `app_config` par votre clé `sk_live_…` et créez un
+> webhook live (mêmes événements). Pensez à faire tourner la clé de test qui
+> a transité par le chat.
+
+## 1. Activer les paiements Stripe (~15 min) — ✅ FAIT (mode test)
 
 1. Créez un compte sur https://stripe.com (ou connectez-vous) et activez-le
    (informations d'entreprise + coordonnées bancaires).
@@ -25,7 +37,7 @@ vous reste à faire.
    (date future, CVC libre). Vous devez arriver sur la page « Merci » avec
    un lien de téléchargement fonctionnel.
 
-## 2. Téléverser les fichiers des decks (~5 min)
+## 2. Téléverser les fichiers des decks (~5 min) — ✅ FAIT
 
 1. https://supabase.com/dashboard/project/qgmtqxnopnffzcnigcpv/storage/buckets/deck-files
 2. Téléversez un fichier `.apkg` par deck, nommé exactement `<slug>.apkg`

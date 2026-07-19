@@ -6,6 +6,22 @@ import { createClient } from "jsr:@supabase/supabase-js@2";
 
 const TOKEN_VALIDITY_DAYS = 7;
 
+/** Secret depuis l'environnement, sinon depuis la table app_config (RLS service_role). */
+async function getSecret(
+  supabase: ReturnType<typeof createClient>,
+  key: string
+): Promise<string | null> {
+  const envValue = Deno.env.get(key);
+  if (envValue) return envValue;
+  const { data } = await supabase
+    .from("app_config")
+    .select("value")
+    .eq("key", key)
+    .single();
+  return (data as { value: string } | null)?.value ?? null;
+}
+
+
 function json(status: number, body: unknown): Response {
   return new Response(JSON.stringify(body), {
     status,
@@ -63,7 +79,12 @@ Deno.serve(async (req) => {
     return json(405, { error: "Method not allowed" });
   }
 
-  const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  );
+
+  const webhookSecret = await getSecret(supabase, "STRIPE_WEBHOOK_SECRET");
   if (!webhookSecret) {
     return json(503, { error: "Webhook not configured" });
   }
@@ -102,11 +123,6 @@ Deno.serve(async (req) => {
     // Événement reçu mais sans action : accusé de réception pour éviter les retries.
     return json(200, { received: true });
   }
-
-  const supabase = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  );
 
   const { data: order, error: orderError } = await supabase
     .from("orders")

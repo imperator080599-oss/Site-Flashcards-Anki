@@ -18,6 +18,22 @@ function json(status: number, body: unknown): Response {
 
 const SLUG_RE = /^[a-z0-9-]{1,100}$/;
 
+/** Secret depuis l'environnement, sinon depuis la table app_config (RLS service_role). */
+async function getSecret(
+  supabase: ReturnType<typeof createClient>,
+  key: string
+): Promise<string | null> {
+  const envValue = Deno.env.get(key);
+  if (envValue) return envValue;
+  const { data } = await supabase
+    .from("app_config")
+    .select("value")
+    .eq("key", key)
+    .single();
+  return (data as { value: string } | null)?.value ?? null;
+}
+
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
@@ -26,7 +42,12 @@ Deno.serve(async (req) => {
     return json(405, { error: "Méthode non autorisée." });
   }
 
-  const stripeKey = Deno.env.get("STRIPE_SECRET_KEY");
+  const supabase = createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
+  );
+
+  const stripeKey = await getSecret(supabase, "STRIPE_SECRET_KEY");
   // Origines autorisées pour les URLs de retour. Surchargeable via le
   // secret SITE_URL (liste séparée par des virgules — domaine personnalisé).
   const allowedOrigins = (
@@ -62,11 +83,6 @@ Deno.serve(async (req) => {
   if (!isAllowed(successUrl) || !isAllowed(cancelUrl)) {
     return json(400, { error: "URL de retour invalide.", code: "invalid" });
   }
-
-  const supabase = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!
-  );
 
   const { data: deck, error: deckError } = await supabase
     .from("decks")
