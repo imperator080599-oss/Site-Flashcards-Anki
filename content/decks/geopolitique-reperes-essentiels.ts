@@ -55,5 +55,6 @@ export const deck: Deck = {
     { name: "Ordres de grandeur", cards: 40 },
   ],
   demo: true,
+  draft: true,
   publishedAt: "2026-07-01",
 };

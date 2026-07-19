@@ -128,7 +128,9 @@ export default async function DeckPage({ params }: Props) {
         {/* Encart d'achat */}
         <aside className="h-fit rounded-md border border-line bg-card p-6 lg:sticky lg:top-24">
           <p className="heading text-3xl">{formatPrice(deck.priceCents)}</p>
-          <p className="mt-1 text-xs text-faint">TVA incluse</p>
+          <p className="mt-1 text-xs text-faint">
+            TVA non applicable, art. 293 B du CGI
+          </p>
           <div className="mt-5">
             <BuyButton deckSlug={deck.slug} priceCents={deck.priceCents} />
           </div>
@@ -181,18 +183,20 @@ export default async function DeckPage({ params }: Props) {
       </section>
 
       {/* Aperçu des cartes */}
-      <section className="mt-16" aria-labelledby="preview-title">
-        <h2 id="preview-title" className="heading text-2xl">
-          Aperçu des cartes
-        </h2>
-        <p className="mt-2 max-w-xl text-sm text-soft">
-          Trois cartes extraites du deck, telles que vous les verrez dans
-          Anki. Cliquez sur une carte pour révéler sa réponse.
-        </p>
-        <div className="mt-7">
-          <FlashcardPreview cards={deck.sampleCards} />
-        </div>
-      </section>
+      {deck.sampleCards.length > 0 && (
+        <section className="mt-16" aria-labelledby="preview-title">
+          <h2 id="preview-title" className="heading text-2xl">
+            Aperçu des cartes
+          </h2>
+          <p className="mt-2 max-w-xl text-sm text-soft">
+            Des cartes extraites du deck, telles que vous les verrez dans
+            Anki. Cliquez sur une carte pour révéler sa réponse.
+          </p>
+          <div className="mt-7">
+            <FlashcardPreview cards={deck.sampleCards} />
+          </div>
+        </section>
+      )}
 
       {/* Structure du deck */}
       <section className="mt-16 max-w-2xl" aria-labelledby="structure-title">

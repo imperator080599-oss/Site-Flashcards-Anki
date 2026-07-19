@@ -59,5 +59,6 @@ export const deck: Deck = {
   ],
   featured: true,
   demo: true,
+  draft: true,
   publishedAt: "2026-07-01",
 };

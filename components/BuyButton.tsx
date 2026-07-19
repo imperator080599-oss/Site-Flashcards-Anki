@@ -67,7 +67,7 @@ export function BuyButton({
           : `Acheter — ${formatPrice(priceCents)}`}
       </Button>
       <p className="mt-3 text-xs text-faint">
-        Paiement sécurisé par Stripe · Téléchargement immédiat · TVA incluse
+        Paiement sécurisé par Stripe · Téléchargement immédiat
       </p>
       {state === "error" && error && (
         <p

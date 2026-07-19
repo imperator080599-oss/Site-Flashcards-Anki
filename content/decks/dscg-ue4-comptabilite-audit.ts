@@ -56,5 +56,6 @@ export const deck: Deck = {
     { name: "Audit et commissariat aux comptes", cards: 120 },
   ],
   demo: true,
+  draft: true,
   publishedAt: "2026-07-05",
 };

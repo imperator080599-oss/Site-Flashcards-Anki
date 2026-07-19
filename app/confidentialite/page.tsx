@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LegalPage, Placeholder } from "@/components/LegalPage";
+import { LegalPage } from "@/components/LegalPage";
 import { CONTACT_EMAIL, SITE_NAME, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -15,8 +15,9 @@ export default function ConfidentialitePage() {
       <h2>Responsable du traitement</h2>
       <p>
         Le responsable du traitement des données collectées sur {SITE_NAME}{" "}
-        est <Placeholder label="identité du responsable (reprendre les mentions légales)" />,
-        joignable à <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        est Hadrien TRAN, entrepreneur individuel (nom commercial
+        « Imperator », SIREN 952 703 775), joignable à{" "}
+        <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
       </p>
 
       <h2>Données collectées et finalités</h2>

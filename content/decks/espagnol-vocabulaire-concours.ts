@@ -58,5 +58,6 @@ export const deck: Deck = {
     { name: "Faux amis et prépositions", cards: 70 },
   ],
   demo: true,
+  draft: true,
   publishedAt: "2026-07-12",
 };

@@ -65,6 +65,24 @@ export const categories: Category[] = [
     order: 7,
   },
   {
+    slug: "comptabilite-ifrs",
+    name: "Comptabilité & IFRS",
+    title: "Decks Anki de comptabilité et normes IFRS",
+    lead: "Plan comptable général, référentiel IFRS, IFRS 9 : les référentiels comptables en cartes, pour les ancrer durablement.",
+    description:
+      "La comptabilité et les normes internationales reposent sur des référentiels précis qu'il faut connaître par cœur : numéros de comptes du PCG, objectifs des normes IAS/IFRS, mécanismes d'IFRS 9. Ces decks transforment ces référentiels en cartes de révision systématiques, utiles aux étudiants comme aux professionnels du chiffre.",
+    order: 5,
+  },
+  {
+    slug: "culture-generale",
+    name: "Géographie & culture générale",
+    title: "Decks Anki de géographie et culture générale",
+    lead: "Départements, capitales du monde, patrimoine mondial, tableau périodique : les repères factuels que tout le monde devrait avoir en tête.",
+    description:
+      "Certaines connaissances sont des fondations : la carte de France, les capitales, les grands sites du patrimoine mondial, les éléments chimiques. Construits sur des sources de référence (Datagouv, UNESCO, IUPAC), ces decks ancrent ces repères une bonne fois pour toutes, pour les concours comme pour la culture personnelle.",
+    order: 9,
+  },
+  {
     slug: "cfa",
     name: "CFA",
     title: "Decks Anki pour le CFA",

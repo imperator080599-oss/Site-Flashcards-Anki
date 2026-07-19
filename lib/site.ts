@@ -5,7 +5,7 @@
  * publiques). En production GitHub Pages, le site vit sous un sous-chemin ;
  * avec un domaine personnalisé, il suffit de changer ces deux variables.
  */
-export const SITE_NAME = "Rappel";
+export const SITE_NAME = "Mémodeck";
 export const SITE_TAGLINE = "Decks Anki premium pour apprendre plus vite";
 export const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"

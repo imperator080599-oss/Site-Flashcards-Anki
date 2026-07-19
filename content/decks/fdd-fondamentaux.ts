@@ -57,5 +57,6 @@ export const deck: Deck = {
     { name: "Mécanismes de prix et SPA", cards: 80 },
   ],
   demo: true,
+  draft: true,
   publishedAt: "2026-07-10",
 };

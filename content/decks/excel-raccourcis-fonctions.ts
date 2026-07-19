@@ -56,5 +56,6 @@ export const deck: Deck = {
     { name: "Modélisation : réflexes et pièges", cards: 50 },
   ],
   demo: true,
+  draft: true,
   publishedAt: "2026-07-08",
 };

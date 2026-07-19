@@ -14,23 +14,15 @@ export default function MentionsLegalesPage() {
     <LegalPage title="Mentions légales" updated="13 juillet 2026">
       <h2>Éditeur du site</h2>
       <p>
-        Le site {SITE_NAME} est édité par{" "}
-        <Placeholder label="nom / raison sociale de l'éditeur" />,{" "}
-        <Placeholder label="forme juridique (auto-entrepreneur, SASU…)" />,
-        dont le siège est situé <Placeholder label="adresse complète" />.
+        Le site {SITE_NAME} est édité par Hadrien TRAN, entrepreneur
+        individuel (micro-entrepreneur), exerçant sous le nom commercial
+        « Imperator », dont l'établissement est situé{" "}
+        <Placeholder label="adresse de l'établissement" />.
       </p>
       <ul>
-        <li>
-          SIREN/SIRET : <Placeholder label="numéro SIREN/SIRET" />
-        </li>
-        <li>
-          TVA intracommunautaire :{" "}
-          <Placeholder label="numéro de TVA, ou mention « TVA non applicable, art. 293 B du CGI »" />
-        </li>
-        <li>
-          Directeur de la publication :{" "}
-          <Placeholder label="nom du directeur de la publication" />
-        </li>
+        <li>SIREN : 952 703 775</li>
+        <li>TVA : non applicable, art. 293 B du CGI</li>
+        <li>Directeur de la publication : Hadrien TRAN</li>
         <li>
           Contact : <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
         </li>

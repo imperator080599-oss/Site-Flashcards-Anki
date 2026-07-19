@@ -16,8 +16,9 @@ export default function CgvPage() {
       <p>
         Les présentes conditions générales de vente (CGV) régissent les ventes
         de contenus numériques — decks de flashcards au format Anki (.apkg) —
-        conclues sur le site {SITE_NAME} entre{" "}
-        <Placeholder label="identité du vendeur (reprendre les mentions légales)" /> (le «
+        conclues sur le site {SITE_NAME} entre Hadrien TRAN, entrepreneur
+        individuel exerçant sous le nom commercial « Imperator »,
+        SIREN 952 703 775 (le «
         Vendeur ») et toute personne physique agissant à des fins personnelles
         (le « Client »). Toute commande implique l'acceptation sans réserve
         des présentes CGV.
@@ -36,10 +37,11 @@ export default function CgvPage() {
 
       <h2>3. Prix</h2>
       <p>
-        Les prix sont indiqués en euros, toutes taxes comprises. Le prix
-        applicable est celui affiché sur la page produit au moment de la
-        commande. Le Vendeur se réserve le droit de modifier ses prix à tout
-        moment pour les commandes futures.
+        Les prix sont indiqués en euros. TVA non applicable, article 293 B du
+        Code général des impôts (franchise en base de TVA). Le prix applicable
+        est celui affiché sur la page produit au moment de la commande. Le
+        Vendeur se réserve le droit de modifier ses prix à tout moment pour
+        les commandes futures.
       </p>
 
       <h2>4. Commande et paiement</h2>
