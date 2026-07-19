@@ -38,14 +38,14 @@ export default function MentionsLegalesPage() {
 
       <h2>Hébergement</h2>
       <p>
-        Le site est hébergé par GitHub, Inc. (GitHub Pages), 88 Colin P. Kelly
-        Jr. Street, San Francisco, CA 94107, États-Unis —{" "}
-        <a href="https://pages.github.com" target="_blank" rel="noopener noreferrer">
-          pages.github.com
+        Le site est hébergé par Vercel Inc., 440 N Barranca Avenue #4133,
+        Covina, CA 91723, États-Unis —{" "}
+        <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">
+          vercel.com
         </a>
         . Les données de commande et la livraison des fichiers sont opérées
         via Supabase (Supabase Inc.), avec hébergement des données dans
-        l'Union européenne, et Stripe pour le paiement.
+        l'Union européenne (région Paris), et Stripe pour le paiement.
       </p>
 
       <h2>Propriété intellectuelle</h2>
