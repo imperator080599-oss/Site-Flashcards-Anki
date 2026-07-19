@@ -1,8 +1,10 @@
 # Checklist de lancement — actions qui vous reviennent
 
-Le site est déployé et fonctionnel en « pré-ouverture » (bouton d'achat
-actif, paiement répondant « pas encore activé » tant que Stripe n'est pas
-branché). Voici, dans l'ordre, ce qu'il vous reste à faire.
+Le site est **en ligne** : https://imperator080599-oss.github.io/Site-Flashcards-Anki/
+(déploiement automatique à chaque push sur la branche). Il est en mode
+« pré-ouverture » : bouton d'achat actif, paiement répondant « pas encore
+activé » tant que Stripe n'est pas branché. Voici, dans l'ordre, ce qu'il
+vous reste à faire.
 
 ## 1. Activer les paiements Stripe (~15 min)
 
@@ -55,6 +57,12 @@ Puis commit + push (le site se redéploie tout seul).
 - [ ] Passer les clés Stripe en mode **live** quand tout est validé
 
 ## 5. Optionnel, quand vous voulez
+
+- **Hébergement Vercel** (URL plus courte, sans sous-chemin) : dans votre
+  dashboard Vercel, projet `rappel-anki` → Settings → Git → connectez le
+  dépôt GitHub `Site-Flashcards-Anki`. Vercel déploiera alors à chaque push,
+  comme GitHub Pages. (Le script `scripts/fetch-content.mjs` était un
+  mécanisme de dépannage, il n'est plus nécessaire.)
 
 - **Domaine personnalisé** : Settings → Pages du dépôt GitHub → Custom
   domain ; puis mettez à jour `NEXT_PUBLIC_SITE_URL` / `NEXT_PUBLIC_BASE_PATH`
