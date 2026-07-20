@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LegalPage, Placeholder } from "@/components/LegalPage";
+import { LegalPage } from "@/components/LegalPage";
 import { CONTACT_EMAIL, SITE_NAME, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -115,9 +115,16 @@ export default function CgvPage() {
 
       <h2>12. Droit applicable et litiges</h2>
       <p>
-        Les présentes CGV sont soumises au droit français. En cas de litige,
-        le Client peut recourir gratuitement à un médiateur de la
-        consommation : <Placeholder label="médiateur de la consommation choisi et ses coordonnées" />.
+        Les présentes CGV sont soumises au droit français. Après démarche
+        écrite préalable auprès du Vendeur restée sans réponse satisfaisante
+        sous un délai d&apos;un mois, le Client peut recourir gratuitement au
+        médiateur de la consommation dont relève le Vendeur : CM2C — Centre
+        de la médiation de la consommation de conciliateurs de justice,
+        14 rue Saint-Jean, 75017 Paris —{" "}
+        <a href="https://www.cm2c.net" target="_blank" rel="noopener noreferrer">
+          cm2c.net
+        </a>
+        .
         Le Client peut également utiliser la plateforme européenne de
         règlement en ligne des litiges :{" "}
         <a

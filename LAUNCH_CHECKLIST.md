@@ -51,26 +51,22 @@ vous reste à faire.
    ```
    puis téléversez le contenu de `dist-decks/`.
 
-## 3. Compléter les informations légales (obligatoire avant encaissement)
+## 3. Compléter les informations légales — ✅ FAIT
 
-Presque terminé : identité de l'éditeur/vendeur, SIREN, TVA (art. 293 B),
-directeur de la publication, responsable du traitement et adresse de
-l'établissement (92500 Rueil-Malmaison) sont renseignés.
+Identité de l'éditeur/vendeur, SIREN, TVA (art. 293 B), directeur de la
+publication, responsable du traitement, adresse de l'établissement
+(92500 Rueil-Malmaison) et médiateur de la consommation (CM2C,
+14 rue Saint-Jean, 75017 Paris — cm2c.net) sont renseignés. Plus aucun
+bloc « [À COMPLÉTER : …] » sur le site.
 
-Il reste **un seul** bloc « [À COMPLÉTER : …] » :
+Deux points de vigilance :
 
-- `app/cgv/page.tsx` — nom et coordonnées du **médiateur de la
-  consommation**. Obligation légale (art. L612-1 et L616-1 du Code de la
-  consommation) pour tout professionnel vendant à des consommateurs :
-  adhérez à un dispositif (ex. CNPM Médiation Consommation, Medicys,
-  CM2C — comptez ~50-80 €/an), puis reportez ici le nom, l'adresse et le
-  site web du médiateur choisi.
-
-Conseil : l'adresse de l'établissement est aujourd'hui « 92500
-Rueil-Malmaison » ; les mentions légales exigent en principe l'adresse
-complète (n° et rue). Complétez-la quand vous le souhaitez.
-
-Puis commit + push (le site se redéploie tout seul).
+- **Adhésion CM2C** : afficher le médiateur ne suffit pas, il faut être
+  effectivement adhérent (convention signée, cotisation annuelle) —
+  vérifiez que votre adhésion est active sur cm2c.net.
+- **Adresse** : les mentions légales exigent en principe l'adresse
+  complète de l'établissement (n° et rue). Complétez-la quand vous le
+  souhaitez.
 
 ## 4. Vérifications finales (~10 min)
 
