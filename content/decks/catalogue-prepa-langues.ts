@@ -69,6 +69,53 @@ export const decks: Deck[] = [
     publishedAt: "2026-07-19",
   },
   {
+    slug: "espagnol-vocabulaire-essentiel-3000",
+    title: "Vocabulaire espagnol essentiel — 3 000 phrases · 9 000 mots",
+    categorySlug: "prepa-ecg",
+    subcategory: "Espagnol",
+    level: "B1-C1",
+    shortDescription:
+      "12 491 fiches recto-verso (24 943 cartes) couvrant tout le lexique espagnol en 41 chapitres thématiques. Version texte, sans audio.",
+    description: [
+      "Le deck de vocabulaire espagnol le plus complet du catalogue : 12 491 fiches organisées en 41 chapitres thématiques — pensée et sentiments, corps et santé, école et université, entreprise, économie, médias, environnement, histoire… Chaque fiche est recto-verso : l'espagnol vous est demandé depuis le français et inversement, soit 24 943 cartes au total.",
+      "Les entrées associent mots et locutions proches (« pensar, opinar, creer » → « penser »), avec les contraires et les nuances (« preocupado ≠ despreocupado »), ce qui construit un lexique organisé plutôt qu'une liste plate.",
+      "Version texte allégée : les fichiers audio de la version d'origine ont été retirés pour un import léger (moins de 8 Mo) — les cartes, elles, sont intégralement conservées.",
+    ],
+    objectives: [
+      "Construire un vocabulaire espagnol étendu et organisé",
+      "Travailler les deux sens de traduction (version et thème)",
+      "Couvrir tous les champs lexicaux des concours et de la vie courante",
+    ],
+    audience: [
+      "Étudiants en prépa ECG et littéraire (LV1/LV2)",
+      "Apprenants d'espagnol de niveau intermédiaire à avancé",
+    ],
+    topics: [
+      "41 chapitres thématiques",
+      "Fiches recto-verso ES ⇄ FR",
+      "Synonymes, contraires et nuances",
+    ],
+    cardCount: 12491,
+    priceCents: 2990,
+    sampleCards: [
+      { front: "El pensamiento", back: "La pensée", tag: "Pensée" },
+      { front: "pensar, opinar, creer", back: "penser", tag: "Pensée" },
+      {
+        front: "preocupado (a) ≠ despreocupado (a)",
+        back: "soucieux (euse) ≠ insouciant(e)",
+        tag: "Sentiments",
+      },
+    ],
+    structure: [
+      {
+        name: "41 chapitres thématiques (pensée, corps, santé, école, économie, médias…)",
+        cards: 12491,
+      },
+    ],
+    featured: true,
+    publishedAt: "2026-07-20",
+  },
+  {
     slug: "ecs-espagnol-theme-systematique",
     title: "Thème espagnol systématique — 900 phrases",
     categorySlug: "prepa-ecg",

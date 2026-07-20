@@ -10,10 +10,11 @@ vous reste à faire.
 > (fichiers des decks) sont **faites**. La clé `sk_test_…` et le secret du
 > webhook (`we_1TuxeyDQg5fciZAs1GKfajgh`) sont stockés dans la table
 > `app_config` (verrouillée par RLS, lue uniquement par les Edge Functions).
-> 27 de vos 29 decks Drive sont dans le bucket `deck-files` sous `drive/` ;
-> les 2 fichiers trop volumineux pour l'import automatique (« Espagnol 3000
-> phrases », 327 Mo, et « mathkang », 208 Mo) restent à glisser-déposer dans
-> le bucket si besoin. Pour passer en production : remplacez la valeur
+> 28 de vos 29 decks Drive sont dans le bucket `deck-files` sous `drive/` ;
+> « Espagnol 3000 phrases » y est en version texte allégée (7,9 Mo au lieu
+> de 327 Mo : fichiers audio retirés, les 12 491 fiches sont intactes).
+> Seul « mathkang » (208 Mo) reste hors ligne — le plan gratuit de Supabase
+> limite chaque fichier à 50 Mo. Pour passer en production : remplacez la valeur
 > `STRIPE_SECRET_KEY` dans `app_config` par votre clé `sk_live_…` et créez un
 > webhook live (mêmes événements). Pensez à faire tourner la clé de test qui
 > a transité par le chat.
