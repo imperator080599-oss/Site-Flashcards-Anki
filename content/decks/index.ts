@@ -16,6 +16,7 @@ import { decks as catalogueFinance } from "./catalogue-finance";
 import { decks as catalogueExcel } from "./catalogue-excel";
 import { decks as cataloguePrepaLangues } from "./catalogue-prepa-langues";
 import { decks as catalogueCultureGenerale } from "./catalogue-culture-generale";
+import { decks as cataloguePhysiqueChimie } from "./catalogue-physique-chimie";
 
 import { deck as eshConceptsFondamentaux } from "./esh-concepts-fondamentaux";
 import { deck as geopolitiqueReperes } from "./geopolitique-reperes-essentiels";
@@ -35,6 +36,7 @@ export const allDecks: Deck[] = [
   ...catalogueExcel,
   ...cataloguePrepaLangues,
   ...catalogueCultureGenerale,
+  ...cataloguePhysiqueChimie,
   // Decks de démonstration (draft: true — non listés)
   eshConceptsFondamentaux,
   geopolitiqueReperes,

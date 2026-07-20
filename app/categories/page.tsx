@@ -6,7 +6,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Catégories",
   description:
-    "Nos decks Anki par discipline : prépa ECG, DCG, DSCG, langues, Excel, Investment Banking, Financial Due Diligence et CFA.",
+    "Nos decks Anki par discipline : prépa ECG, DCG, DSCG, langues, Excel, Investment Banking, Financial Due Diligence, comptabilité & IFRS, CFA, culture générale et physique-chimie.",
   alternates: { canonical: absoluteUrl("/categories/") },
 };
 

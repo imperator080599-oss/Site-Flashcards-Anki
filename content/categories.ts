@@ -75,12 +75,21 @@ export const categories: Category[] = [
   },
   {
     slug: "culture-generale",
-    name: "Géographie & culture générale",
-    title: "Decks Anki de géographie et culture générale",
-    lead: "Départements, capitales du monde, patrimoine mondial, tableau périodique : les repères factuels que tout le monde devrait avoir en tête.",
+    name: "Culture générale",
+    title: "Decks Anki de culture générale",
+    lead: "Départements, capitales du monde, patrimoine mondial : les repères factuels que tout le monde devrait avoir en tête.",
     description:
-      "Certaines connaissances sont des fondations : la carte de France, les capitales, les grands sites du patrimoine mondial, les éléments chimiques. Construits sur des sources de référence (Datagouv, UNESCO, IUPAC), ces decks ancrent ces repères une bonne fois pour toutes, pour les concours comme pour la culture personnelle.",
+      "Certaines connaissances sont des fondations : la carte de France, les capitales, les grands sites du patrimoine mondial. Construits sur des sources de référence (Datagouv, UNESCO), ces decks ancrent ces repères une bonne fois pour toutes, pour les concours comme pour la culture personnelle.",
     order: 9,
+  },
+  {
+    slug: "physique-chimie",
+    name: "Physique-Chimie",
+    title: "Decks Anki de physique-chimie",
+    lead: "Le tableau périodique et les repères des sciences physiques, en cartes construites sur des données de référence.",
+    description:
+      "Les sciences physiques reposent sur un socle de connaissances exactes : éléments, symboles, masses atomiques. Construits sur des données de référence comme celles de l'IUPAC, ces decks installent ce socle par répétition espacée — pour les lycéens, les étudiants et tous les esprits scientifiques.",
+    order: 10,
   },
   {
     slug: "cfa",
