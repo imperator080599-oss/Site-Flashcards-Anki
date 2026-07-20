@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { LegalPage, Placeholder } from "@/components/LegalPage";
+import { LegalPage } from "@/components/LegalPage";
 import { CONTACT_EMAIL, SITE_NAME, absoluteUrl } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -16,8 +16,8 @@ export default function MentionsLegalesPage() {
       <p>
         Le site {SITE_NAME} est édité par Hadrien TRAN, entrepreneur
         individuel (micro-entrepreneur), exerçant sous le nom commercial
-        « Imperator », dont l'établissement est situé{" "}
-        <Placeholder label="adresse de l'établissement" />.
+        « Imperator », dont l'établissement est situé à
+        92500 Rueil-Malmaison.
       </p>
       <ul>
         <li>SIREN : 952 703 775</li>
