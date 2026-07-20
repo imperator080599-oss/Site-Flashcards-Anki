@@ -52,12 +52,22 @@ vous reste à faire.
 
 ## 3. Compléter les informations légales (obligatoire avant encaissement)
 
-Remplacez les blocs « [À COMPLÉTER : …] » (affichés en rouge) dans :
+Presque terminé : identité de l'éditeur/vendeur, SIREN, TVA (art. 293 B),
+directeur de la publication, responsable du traitement et adresse de
+l'établissement (92500 Rueil-Malmaison) sont renseignés.
 
-- `app/mentions-legales/page.tsx` — identité de l'éditeur, SIREN/SIRET,
-  TVA, directeur de la publication
-- `app/cgv/page.tsx` — identité du vendeur, médiateur de la consommation
-- `app/confidentialite/page.tsx` — responsable du traitement
+Il reste **un seul** bloc « [À COMPLÉTER : …] » :
+
+- `app/cgv/page.tsx` — nom et coordonnées du **médiateur de la
+  consommation**. Obligation légale (art. L612-1 et L616-1 du Code de la
+  consommation) pour tout professionnel vendant à des consommateurs :
+  adhérez à un dispositif (ex. CNPM Médiation Consommation, Medicys,
+  CM2C — comptez ~50-80 €/an), puis reportez ici le nom, l'adresse et le
+  site web du médiateur choisi.
+
+Conseil : l'adresse de l'établissement est aujourd'hui « 92500
+Rueil-Malmaison » ; les mentions légales exigent en principe l'adresse
+complète (n° et rue). Complétez-la quand vous le souhaitez.
 
 Puis commit + push (le site se redéploie tout seul).
 
