@@ -75,15 +75,18 @@ jobs:
   smoke-backend:
     runs-on: ubuntu-latest
     steps:
-      - name: create-checkout répond (503 tant que Stripe n'est pas configuré, 200 ensuite)
+      # Slug volontairement inexistant : vérifie que la fonction et la base
+      # répondent (404 attendu, 503 tant que Stripe n'est pas configuré)
+      # sans créer de session Stripe à chaque push.
+      - name: create-checkout répond (404 slug inconnu, ou 503 avant Stripe)
         run: |
           code=$(curl -s -o /tmp/r.json -w "%{http_code}" -X POST \
             "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/create-checkout" \
             -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"deckSlug":"dcg-ue9-comptabilite","successUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/decks/"}')
+            -d '{"deckSlug":"smoke-test-deck-inexistant","successUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/decks/"}')
           cat /tmp/r.json; echo
-          [ "$code" = "503" ] || [ "$code" = "200" ] || { echo "Code inattendu: $code"; exit 1; }
+          [ "$code" = "404" ] || [ "$code" = "503" ] || { echo "Code inattendu: $code"; exit 1; }
       - name: download rejette un jeton invalide (400)
         run: |
           code=$(curl -s -o /dev/null -w "%{http_code}" \
