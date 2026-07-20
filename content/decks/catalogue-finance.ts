@@ -25,7 +25,7 @@ export const decks: Deck[] = [
     ],
     topics: ["Comparable companies & precedent transactions", "DCF", "LBO analysis", "M&A sell-side / buy-side", "IPO"],
     cardCount: 2330,
-    priceCents: 4990,
+    priceCents: 7990,
     sampleCards: [
       {
         front: "LBO analysis typically produces valuations at the ___ of the comprehensive analysis range due to leverage constraints.",
@@ -66,7 +66,7 @@ export const decks: Deck[] = [
     audience: ["Candidats aux stages et CDI en TS / FDD", "Auditeurs préparant un move vers le TS"],
     topics: ["Net debt & debt-like items", "Trapped cash", "Net working capital", "Equity bridge"],
     cardCount: 284,
-    priceCents: 3490,
+    priceCents: 4990,
     sampleCards: [
       {
         front: "In FDD, what does \"Reported Net Debt\" typically consist of?",

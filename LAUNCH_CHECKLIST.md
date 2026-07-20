@@ -1,23 +1,24 @@
 # Checklist de lancement — actions qui vous reviennent
 
-Le site est **en ligne** : https://imperator080599-oss.github.io/Site-Flashcards-Anki/
-(déploiement automatique à chaque push sur la branche). Il est en mode
-« pré-ouverture » : bouton d'achat actif, paiement répondant « pas encore
-activé » tant que Stripe n'est pas branché. Voici, dans l'ordre, ce qu'il
-vous reste à faire.
+Le site est **en ligne et encaisse réellement** :
+https://imperator080599-oss.github.io/Site-Flashcards-Anki/
+(déploiement automatique à chaque push sur la branche).
 
-> **État au 19/07/2026** : les étapes 1 (Stripe, en mode **test**) et 2
-> (fichiers des decks) sont **faites**. La clé `sk_test_…` et le secret du
-> webhook (`we_1TuxeyDQg5fciZAs1GKfajgh`) sont stockés dans la table
-> `app_config` (verrouillée par RLS, lue uniquement par les Edge Functions).
-> 28 de vos 29 decks Drive sont dans le bucket `deck-files` sous `drive/` ;
-> « Espagnol 3000 phrases » y est en version texte allégée (7,9 Mo au lieu
-> de 327 Mo : fichiers audio retirés, les 12 491 fiches sont intactes).
-> Seul « mathkang » (208 Mo) reste hors ligne — le plan gratuit de Supabase
-> limite chaque fichier à 50 Mo. Pour passer en production : remplacez la valeur
-> `STRIPE_SECRET_KEY` dans `app_config` par votre clé `sk_live_…` et créez un
-> webhook live (mêmes événements). Pensez à faire tourner la clé de test qui
-> a transité par le chat.
+> **État au 20/07/2026** : Stripe est en mode **live** — la clé `sk_live_…`
+> et le secret du webhook live (`we_1TvLnwDM4eYIOmUoxceSQO0K`, événements
+> `checkout.session.completed` + `checkout.session.async_payment_succeeded`)
+> sont stockés dans la table `app_config` (verrouillée par RLS, lue
+> uniquement par les Edge Functions). L'ancien webhook de test a été
+> supprimé. 28 des 29 decks Drive sont dans le bucket `deck-files` sous
+> `drive/` ; « Espagnol 3000 phrases » y est en version texte allégée
+> (7,9 Mo au lieu de 327 Mo). Seul « mathkang » (208 Mo) reste hors ligne —
+> le plan gratuit de Supabase limite chaque fichier à 50 Mo.
+>
+> **Hygiène de sécurité recommandée** : la clé live a transité par le chat.
+> Quand vous voulez, faites-la tourner (Dashboard Stripe → Clés API →
+> « Roll key ») puis mettez à jour la valeur dans Supabase → SQL Editor :
+> `update app_config set value = 'sk_live_NOUVELLE' where key = 'STRIPE_SECRET_KEY';`
+> (le webhook et son secret ne changent pas).
 
 ## 1. Activer les paiements Stripe (~15 min) — ✅ FAIT (mode test)
 
@@ -70,10 +71,16 @@ Deux points de vigilance :
 
 ## 4. Vérifications finales (~10 min)
 
-- [ ] Achat test complet (paiement test → téléchargement → import dans Anki)
-- [ ] E-mail de reçu Stripe bien reçu
+- [x] Passer les clés Stripe en mode **live** — fait le 20/07/2026
+      (session de paiement live vérifiée de bout en bout)
+- [ ] **Premier achat réel** : achetez vous-même un petit deck (4,90 €)
+      avec une vraie carte — paiement → page « Merci » → téléchargement →
+      import dans Anki. C'est le seul test qui valide toute la chaîne en
+      conditions réelles (vous pouvez ensuite vous rembourser depuis le
+      Dashboard Stripe, sans frais).
+- [ ] E-mail de reçu Stripe bien reçu (activez les reçus : Dashboard →
+      Settings → Emails → « Successful payments »)
 - [ ] Lien de téléchargement : réutilisable, puis expire comme prévu
-- [ ] Passer les clés Stripe en mode **live** quand tout est validé
 
 ## 5. Optionnel, quand vous voulez
 

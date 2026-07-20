@@ -81,7 +81,7 @@ export const decks: Deck[] = [
     audience: ["Candidats à la certification MO-200", "Étudiants valorisant Excel sur leur CV"],
     topics: ["Mise en forme conditionnelle", "Graphiques et sparklines", "Gestion de données", "Formules"],
     cardCount: 881,
-    priceCents: 1990,
+    priceCents: 2490,
     sampleCards: [
       {
         front: "Which conditional formatting rule type applies formatting to cells containing the highest or lowest values in a range?",
@@ -118,7 +118,7 @@ export const decks: Deck[] = [
     audience: ["Candidats à la certification MO-201", "Utilisateurs avancés d'Excel"],
     topics: ["Macros et VBA", "Fonctions avancées", "Analyse de données", "Modèles et audits de formules"],
     cardCount: 831,
-    priceCents: 1990,
+    priceCents: 2490,
     sampleCards: [
       {
         front: "What visual indicator on the Excel status bar shows that a macro recording is in progress?",

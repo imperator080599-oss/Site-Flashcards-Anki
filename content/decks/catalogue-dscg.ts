@@ -31,7 +31,7 @@ export const decks: Deck[] = [
       "Structure de financement et ingénierie",
     ],
     cardCount: 3977,
-    priceCents: 3990,
+    priceCents: 4990,
     sampleCards: [
       {
         front: "Qu'est-ce qu'un marché primaire en finance ?",

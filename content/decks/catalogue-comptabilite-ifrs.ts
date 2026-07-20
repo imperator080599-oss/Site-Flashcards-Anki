@@ -90,7 +90,7 @@ export const decks: Deck[] = [
     ],
     topics: ["Classification et évaluation", "Expected credit losses", "Risque de crédit"],
     cardCount: 691,
-    priceCents: 3490,
+    priceCents: 4490,
     sampleCards: [
       {
         front: "When assessing significant increases in credit risk, an entity compares the ___ at the reporting date with the risk at initial recognition.",
@@ -125,7 +125,7 @@ export const decks: Deck[] = [
     audience: ["Équipes normes, trésorerie et consolidation", "Auditeurs sur des groupes couverts"],
     topics: ["Désignations de couverture", "Cash flow hedge", "Cost of hedging"],
     cardCount: 409,
-    priceCents: 2990,
+    priceCents: 3990,
     sampleCards: [
       {
         front: "In a cash flow hedge of inventory purchases, where do accumulated intrinsic value and time value amounts go at recognition?",
