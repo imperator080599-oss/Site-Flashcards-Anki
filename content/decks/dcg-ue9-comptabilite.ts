@@ -29,6 +29,7 @@ export const deck: Deck = {
     "Immobilisations et amortissements",
     "Travaux d'inventaire et clôture",
   ],
+  cardLanguages: ["fr"],
   cardCount: 620,
   priceCents: 2400,
   sampleCards: [

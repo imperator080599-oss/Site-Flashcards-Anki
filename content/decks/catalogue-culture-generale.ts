@@ -19,6 +19,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats aux concours administratifs", "Curieux et amateurs de quiz"],
     topics: ["Numéros et noms", "Localisation"],
+    cardLanguages: ["fr"],
     cardCount: 180,
     priceCents: 690,
     sampleCards: [
@@ -43,6 +44,7 @@ export const decks: Deck[] = [
     objectives: ["Connaître les régions métropolitaines", "Compléter la carte mentale de la France"],
     audience: ["Candidats aux concours", "Curieux"],
     topics: ["Régions métropolitaines"],
+    cardLanguages: ["fr"],
     cardCount: 12,
     priceCents: 490,
     sampleCards: [],
@@ -63,6 +65,7 @@ export const decks: Deck[] = [
     objectives: ["Connaître la capitale de chaque État", "Consolider sa culture géopolitique"],
     audience: ["Étudiants en prépa et IEP", "Candidats aux concours et quiz"],
     topics: ["Capitales du monde"],
+    cardLanguages: ["fr"],
     cardCount: 197,
     priceCents: 690,
     sampleCards: [
@@ -87,6 +90,7 @@ export const decks: Deck[] = [
     objectives: ["Situer chaque arrondissement instantanément", "Mémoriser la spirale parisienne"],
     audience: ["Nouveaux arrivants à Paris", "Curieux"],
     topics: ["Arrondissements", "Cartes de localisation"],
+    cardLanguages: ["fr"],
     cardCount: 19,
     priceCents: 490,
     sampleCards: [],
@@ -110,6 +114,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Amateurs de culture générale et de voyages", "Candidats aux concours et quiz"],
     topics: ["Sites culturels", "Sites naturels", "Sites transfrontaliers"],
+    cardLanguages: ["fr"],
     cardCount: 2496,
     priceCents: 1490,
     sampleCards: [

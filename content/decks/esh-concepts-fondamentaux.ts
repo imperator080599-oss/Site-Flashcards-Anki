@@ -30,6 +30,7 @@ export const deck: Deck = {
     "Politiques économiques et intervention publique",
     "Sociologie : stratification, mobilité, socialisation",
   ],
+  cardLanguages: ["fr"],
   cardCount: 480,
   priceCents: 2900,
   sampleCards: [

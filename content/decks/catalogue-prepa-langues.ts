@@ -21,6 +21,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants en prépa ECG (HGG)", "Candidats aux IEP et à l'agrégation"],
     topics: ["Industrialisation et mondialisations", "Crises et conflits", "Innovations et société"],
+    cardLanguages: ["fr"],
     cardCount: 536,
     priceCents: 1990,
     sampleCards: [
@@ -51,6 +52,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants en prépa ECG et littéraire", "Candidats aux IEP"],
     topics: ["Temps et aspects", "Modaux", "Structures idiomatiques"],
+    cardLanguages: ["fr", "en"],
     cardCount: 500,
     priceCents: 1990,
     sampleCards: [
@@ -95,6 +97,7 @@ export const decks: Deck[] = [
       "Fiches recto-verso ES ⇄ FR",
       "Synonymes, contraires et nuances",
     ],
+    cardLanguages: ["fr", "es"],
     cardCount: 12491,
     priceCents: 2990,
     sampleCards: [
@@ -134,6 +137,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants en prépa ECG et littéraire (LV1/LV2)", "Candidats aux IEP"],
     topics: ["Subjonctif et concordance", "Tournures idiomatiques", "Prépositions et régimes"],
+    cardLanguages: ["fr", "es"],
     cardCount: 900,
     priceCents: 2490,
     sampleCards: [
@@ -169,6 +173,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Lycéens et étudiants latinistes", "Candidats aux concours littéraires"],
     topics: ["Substantifs et déclinaisons", "Verbes usuels", "Lexique des textes classiques"],
+    cardLanguages: ["la", "fr"],
     cardCount: 733,
     priceCents: 1290,
     sampleCards: [
@@ -197,6 +202,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Apprenants du vietnamien, tous niveaux", "Familles et voyageurs de longue durée"],
     topics: ["Expressions courantes", "Vocabulaire thématique", "Lexique avancé"],
+    cardLanguages: ["fr", "vi"],
     cardCount: 3754,
     priceCents: 2990,
     sampleCards: [
@@ -225,6 +231,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Apprenants débutants à intermédiaires", "Autodidactes cherchant une progression structurée"],
     topics: ["Phrases du quotidien", "Notes de grammaire", "Traductions littérales"],
+    cardLanguages: ["vi", "fr"],
     cardCount: 2007,
     priceCents: 2490,
     sampleCards: [

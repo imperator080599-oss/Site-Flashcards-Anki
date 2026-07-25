@@ -30,6 +30,7 @@ export const deck: Deck = {
     "Migrations et mémoire historique",
     "Connecteurs et tournures d'essai",
   ],
+  cardLanguages: ["fr", "es"],
   cardCount: 650,
   priceCents: 1900,
   sampleCards: [

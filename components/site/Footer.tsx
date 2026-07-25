@@ -1,8 +1,14 @@
 import Link from "next/link";
-import { categories } from "@/content/categories";
+import { getCategories } from "@/lib/catalog";
 import { SITE_NAME, CONTACT_EMAIL } from "@/lib/site";
+import { categoryPath, defaultLocale, path, type Locale } from "@/lib/i18n";
+import { t } from "@/content/i18n/ui";
 
-export function Footer() {
+export function Footer({ locale = defaultLocale }: { locale?: Locale }) {
+  const ui = t(locale);
+  const categories = getCategories(locale);
+  const linkClass = "text-sm text-soft transition-colors hover:text-ink";
+
   return (
     <footer className="mt-24 border-t border-line bg-wash">
       <div className="container-site grid gap-10 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -12,22 +18,18 @@ export function Footer() {
             <span className="text-accent">.</span>
           </p>
           <p className="mt-3 text-sm leading-relaxed text-soft">
-            Des decks Anki soigneusement construits pour apprendre plus vite,
-            grâce à la répétition espacée et au rappel actif.
+            {ui.footer.tagline}
           </p>
         </div>
 
-        <nav aria-label="Catégories">
+        <nav aria-label={ui.footer.categories}>
           <p className="text-xs font-semibold uppercase tracking-wider text-faint">
-            Catégories
+            {ui.footer.categories}
           </p>
           <ul className="mt-4 space-y-2.5">
             {categories.map((c) => (
               <li key={c.slug}>
-                <Link
-                  href={`/categories/${c.slug}/`}
-                  className="text-sm text-soft transition-colors hover:text-ink"
-                >
+                <Link href={categoryPath(c.slug, locale)} className={linkClass}>
                   {c.name}
                 </Link>
               </li>
@@ -35,55 +37,52 @@ export function Footer() {
           </ul>
         </nav>
 
-        <nav aria-label="Navigation">
+        <nav aria-label={ui.footer.navigation}>
           <p className="text-xs font-semibold uppercase tracking-wider text-faint">
-            Navigation
+            {ui.footer.navigation}
           </p>
           <ul className="mt-4 space-y-2.5">
             <li>
-              <Link href="/decks/" className="text-sm text-soft transition-colors hover:text-ink">
-                Tous les decks
+              <Link href={path("decks", locale)} className={linkClass}>
+                {ui.footer.allDecks}
               </Link>
             </li>
             <li>
-              <Link href="/methode/" className="text-sm text-soft transition-colors hover:text-ink">
-                La méthode
+              <Link href={path("method", locale)} className={linkClass}>
+                {ui.nav.method}
               </Link>
             </li>
             <li>
-              <Link href="/faq/" className="text-sm text-soft transition-colors hover:text-ink">
-                FAQ
+              <Link href={path("faq", locale)} className={linkClass}>
+                {ui.nav.faq}
               </Link>
             </li>
             <li>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="text-sm text-soft transition-colors hover:text-ink"
-              >
-                Contact
+              <a href={`mailto:${CONTACT_EMAIL}`} className={linkClass}>
+                {ui.footer.contact}
               </a>
             </li>
           </ul>
         </nav>
 
-        <nav aria-label="Informations légales">
+        <nav aria-label={ui.footer.legal}>
           <p className="text-xs font-semibold uppercase tracking-wider text-faint">
-            Légal
+            {ui.footer.legal}
           </p>
           <ul className="mt-4 space-y-2.5">
             <li>
-              <Link href="/mentions-legales/" className="text-sm text-soft transition-colors hover:text-ink">
-                Mentions légales
+              <Link href={path("legalNotice", locale)} className={linkClass}>
+                {ui.footer.legalNotice}
               </Link>
             </li>
             <li>
-              <Link href="/cgv/" className="text-sm text-soft transition-colors hover:text-ink">
-                Conditions générales de vente
+              <Link href={path("terms", locale)} className={linkClass}>
+                {ui.footer.terms}
               </Link>
             </li>
             <li>
-              <Link href="/confidentialite/" className="text-sm text-soft transition-colors hover:text-ink">
-                Politique de confidentialité
+              <Link href={path("privacy", locale)} className={linkClass}>
+                {ui.footer.privacy}
               </Link>
             </li>
           </ul>
@@ -93,11 +92,9 @@ export function Footer() {
       <div className="border-t border-line">
         <div className="container-site flex flex-col gap-2 py-6 text-xs text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {new Date().getFullYear()} {SITE_NAME}. Tous droits réservés.
+            © {new Date().getFullYear()} {SITE_NAME}. {ui.footer.rights}
           </p>
-          <p>
-            Anki est un logiciel libre développé indépendamment de {SITE_NAME}.
-          </p>
+          <p>{ui.footer.ankiNote(SITE_NAME)}</p>
         </div>
       </div>
     </footer>

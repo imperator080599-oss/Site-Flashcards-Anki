@@ -20,6 +20,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants visant la finance, l'audit ou le conseil", "Tout utilisateur quotidien d'Excel"],
     topics: ["Raccourcis fréquents", "Ruban et navigation", "Mise en forme", "Collage spécial"],
+    cardLanguages: ["en"],
     cardCount: 192,
     priceCents: 990,
     sampleCards: [
@@ -52,6 +53,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Analystes, contrôleurs de gestion, comptables", "Candidats aux certifications Excel"],
     topics: ["Fonctions financières", "Recherche et référence", "Texte, dates, logique", "Maths et statistiques"],
+    cardLanguages: ["en"],
     cardCount: 515,
     priceCents: 1290,
     sampleCards: [
@@ -80,6 +82,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats à la certification MO-200", "Étudiants valorisant Excel sur leur CV"],
     topics: ["Mise en forme conditionnelle", "Graphiques et sparklines", "Gestion de données", "Formules"],
+    cardLanguages: ["en"],
     cardCount: 881,
     priceCents: 2490,
     sampleCards: [
@@ -117,6 +120,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats à la certification MO-201", "Utilisateurs avancés d'Excel"],
     topics: ["Macros et VBA", "Fonctions avancées", "Analyse de données", "Modèles et audits de formules"],
+    cardLanguages: ["en"],
     cardCount: 831,
     priceCents: 2490,
     sampleCards: [

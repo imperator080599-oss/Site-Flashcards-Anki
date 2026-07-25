@@ -1,4 +1,6 @@
 import { COMMERCE_ENABLED, SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/site";
+import { defaultLocale, type Locale } from "@/lib/i18n";
+import { t } from "@/content/i18n/ui";
 
 /**
  * Client des fonctions commerce (Supabase Edge Functions).
@@ -6,30 +8,51 @@ import { COMMERCE_ENABLED, SUPABASE_ANON_KEY, SUPABASE_URL } from "@/lib/site";
  * Aucun secret ici : seule la clé publique (anon) est utilisée. Les prix,
  * la vérification du paiement et l'accès aux fichiers sont exclusivement
  * traités côté serveur.
+ *
+ * Les messages d'erreur affichés proviennent du dictionnaire local et non du
+ * serveur : ils sont ainsi toujours dans la langue de la page.
  */
+
+export type CommerceErrorCode =
+  | "disabled"
+  | "unavailable"
+  | "not_found"
+  | "not_paid"
+  | "invalid"
+  | "expired"
+  | "unknown";
 
 export class CommerceError extends Error {
   constructor(
     message: string,
-    public readonly code:
-      | "disabled"
-      | "unavailable"
-      | "not_found"
-      | "not_paid"
-      | "invalid"
-      | "expired"
-      | "unknown" = "unknown"
+    public readonly code: CommerceErrorCode = "unknown"
   ) {
     super(message);
+  }
+
+  /** Message destiné à l'utilisateur, dans la langue de la page. */
+  localizedMessage(locale: Locale = defaultLocale): string {
+    return t(locale).commerceErrors[this.code];
+  }
+}
+
+function errorCodeFrom(payloadCode: string | undefined): CommerceErrorCode {
+  switch (payloadCode) {
+    case "payments_not_configured":
+      return "unavailable";
+    case "not_found":
+    case "not_paid":
+    case "expired":
+    case "invalid":
+      return payloadCode;
+    default:
+      return "unknown";
   }
 }
 
 async function callFunction<T>(name: string, body: unknown): Promise<T> {
   if (!COMMERCE_ENABLED) {
-    throw new CommerceError(
-      "La boutique n'est pas encore ouverte sur cette instance.",
-      "disabled"
-    );
+    throw new CommerceError("Commerce disabled on this instance.", "disabled");
   }
 
   let response: Response;
@@ -44,10 +67,7 @@ async function callFunction<T>(name: string, body: unknown): Promise<T> {
       body: JSON.stringify(body),
     });
   } catch {
-    throw new CommerceError(
-      "Impossible de contacter le serveur. Vérifiez votre connexion puis réessayez.",
-      "unavailable"
-    );
+    throw new CommerceError("Network error.", "unavailable");
   }
 
   const payload = (await response.json().catch(() => ({}))) as {
@@ -56,21 +76,9 @@ async function callFunction<T>(name: string, body: unknown): Promise<T> {
   } & T;
 
   if (!response.ok) {
-    const code =
-      payload.code === "payments_not_configured"
-        ? "unavailable"
-        : payload.code === "not_found"
-          ? "not_found"
-          : payload.code === "not_paid"
-            ? "not_paid"
-            : payload.code === "expired"
-              ? "expired"
-              : payload.code === "invalid"
-                ? "invalid"
-                : "unknown";
     throw new CommerceError(
-      payload.error ?? "Une erreur est survenue. Réessayez dans un instant.",
-      code
+      payload.error ?? "Request failed.",
+      errorCodeFrom(payload.code)
     );
   }
 
@@ -81,12 +89,14 @@ async function callFunction<T>(name: string, body: unknown): Promise<T> {
 export async function createCheckout(
   deckSlug: string,
   successUrl: string,
-  cancelUrl: string
+  cancelUrl: string,
+  locale: Locale = defaultLocale
 ): Promise<{ url: string }> {
   return callFunction<{ url: string }>("create-checkout", {
     deckSlug,
     successUrl,
     cancelUrl,
+    locale,
   });
 }
 
@@ -100,11 +110,16 @@ export interface OrderConfirmation {
 }
 
 /** Vérifie une session Checkout côté serveur et récupère le lien de téléchargement. */
-export async function confirmOrder(sessionId: string): Promise<OrderConfirmation> {
-  return callFunction<OrderConfirmation>("confirm-order", { sessionId });
+export async function confirmOrder(
+  sessionId: string,
+  locale: Locale = defaultLocale
+): Promise<OrderConfirmation> {
+  return callFunction<OrderConfirmation>("confirm-order", { sessionId, locale });
 }
 
 /** URL de téléchargement sécurisé pour un jeton d'achat. */
-export function downloadUrl(token: string): string {
-  return `${SUPABASE_URL}/functions/v1/download?token=${encodeURIComponent(token)}`;
+export function downloadUrl(token: string, locale: Locale = defaultLocale): string {
+  return `${SUPABASE_URL}/functions/v1/download?token=${encodeURIComponent(
+    token
+  )}&lang=${locale}`;
 }

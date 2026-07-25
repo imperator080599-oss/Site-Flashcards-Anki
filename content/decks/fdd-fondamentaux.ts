@@ -30,6 +30,7 @@ export const deck: Deck = {
     "Dette nette et debt-like items",
     "Mécanismes de prix : locked box vs completion accounts",
   ],
+  cardLanguages: ["fr"],
   cardCount: 430,
   priceCents: 4400,
   sampleCards: [

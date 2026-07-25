@@ -30,6 +30,7 @@ export const decks: Deck[] = [
       "Valorisation et politique financière",
       "Structure de financement et ingénierie",
     ],
+    cardLanguages: ["fr"],
     cardCount: 3977,
     priceCents: 4990,
     sampleCards: [
@@ -71,6 +72,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats au DSCG (UE4)", "Étudiants en master CCA"],
     topics: ["Normes IFRS", "Consolidation", "Audit"],
+    cardLanguages: ["fr"],
     cardCount: 128,
     priceCents: 1490,
     sampleCards: [
@@ -111,6 +113,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats au DSCG (UE6)", "Étudiants souhaitant un anglais business solide"],
     topics: ["Business & strategy", "Marketing et digital", "Innovation et organisations"],
+    cardLanguages: ["en"],
     cardCount: 3435,
     priceCents: 2990,
     sampleCards: [

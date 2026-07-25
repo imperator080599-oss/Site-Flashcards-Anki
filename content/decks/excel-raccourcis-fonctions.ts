@@ -29,6 +29,7 @@ export const deck: Deck = {
     "Fonctions logiques, texte et dates",
     "Bonnes pratiques de modélisation",
   ],
+  cardLanguages: ["fr"],
   cardCount: 350,
   priceCents: 1900,
   sampleCards: [

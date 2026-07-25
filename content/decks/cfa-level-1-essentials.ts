@@ -31,6 +31,7 @@ export const deck: Deck = {
     "Derivatives & Alternative Investments",
     "Portfolio Management & Ethics",
   ],
+  cardLanguages: ["en"],
   cardCount: 900,
   priceCents: 3900,
   sampleCards: [

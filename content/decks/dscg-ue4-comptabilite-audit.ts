@@ -28,6 +28,7 @@ export const deck: Deck = {
     "Normes IFRS : cadre et principales normes",
     "Audit : cadre légal, démarche, NEP",
   ],
+  cardLanguages: ["fr"],
   cardCount: 540,
   priceCents: 3400,
   sampleCards: [

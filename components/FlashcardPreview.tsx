@@ -2,13 +2,24 @@
 
 import { useState } from "react";
 import type { SampleCard } from "@/content/types";
+import { defaultLocale, type Locale } from "@/lib/i18n";
+import { t } from "@/content/i18n/ui";
 
 /**
  * Aperçu interactif d'une carte Anki : recto visible, clic (ou Entrée)
  * pour retourner la carte et révéler le verso — la mécanique exacte du
  * rappel actif.
  */
-function Flashcard({ card, index }: { card: SampleCard; index: number }) {
+function Flashcard({
+  card,
+  index,
+  locale,
+}: {
+  card: SampleCard;
+  index: number;
+  locale: Locale;
+}) {
+  const ui = t(locale).flashcard;
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -18,9 +29,7 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
         onClick={() => setFlipped((v) => !v)}
         aria-pressed={flipped}
         aria-label={
-          flipped
-            ? `Carte ${index + 1} : voir la question`
-            : `Carte ${index + 1} : révéler la réponse`
+          flipped ? ui.ariaHide(index + 1) : ui.ariaReveal(index + 1)
         }
         className="block w-full text-left"
       >
@@ -31,7 +40,7 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
           <div className="flashcard-face col-start-1 row-start-1 flex flex-col rounded-md border border-line bg-card p-6 shadow-lift">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-semibold uppercase tracking-wider text-faint">
-                Recto — Question
+                {ui.front}
               </span>
               {card.tag && (
                 <span className="rounded-xs bg-wash px-2 py-0.5 text-[11px] text-soft">
@@ -41,7 +50,7 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
             </div>
             <p className="heading mt-4 text-lg leading-snug">{card.front}</p>
             <span className="mt-auto pt-5 text-xs text-accent">
-              Cliquer pour révéler la réponse ↺
+              {ui.reveal}
             </span>
           </div>
 
@@ -49,7 +58,7 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
           <div className="flashcard-face flashcard-back col-start-1 row-start-1 flex flex-col rounded-md border border-accent/25 bg-accent-wash p-6 shadow-lift">
             <div className="flex items-center justify-between">
               <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">
-                Verso — Réponse
+                {ui.back}
               </span>
               {card.tag && (
                 <span className="rounded-xs bg-card px-2 py-0.5 text-[11px] text-soft">
@@ -61,7 +70,7 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
               {card.back}
             </p>
             <span className="mt-auto pt-5 text-xs text-accent">
-              Revoir la question ↺
+              {ui.hide}
             </span>
           </div>
         </div>
@@ -70,14 +79,20 @@ function Flashcard({ card, index }: { card: SampleCard; index: number }) {
   );
 }
 
-export function FlashcardPreview({ cards }: { cards: SampleCard[] }) {
+export function FlashcardPreview({
+  cards,
+  locale = defaultLocale,
+}: {
+  cards: SampleCard[];
+  locale?: Locale;
+}) {
   // Une seule carte (ex. hero) : pleine largeur ; sinon grille responsive.
   const columns =
     cards.length === 1 ? "" : "lg:grid-cols-2 xl:grid-cols-3";
   return (
     <div className={`grid gap-5 ${columns}`}>
       {cards.map((card, i) => (
-        <Flashcard key={i} card={card} index={i} />
+        <Flashcard key={i} card={card} index={i} locale={locale} />
       ))}
     </div>
   );

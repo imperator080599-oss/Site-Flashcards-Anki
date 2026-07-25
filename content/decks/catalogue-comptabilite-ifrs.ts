@@ -23,6 +23,7 @@ export const decks: Deck[] = [
       "Collaborateurs comptables et alternants en cabinet",
     ],
     topics: ["Classes 1 à 8 du PCG", "Comptes et subdivisions", "Règlement ANC 2014-03 (v. 2026)"],
+    cardLanguages: ["fr"],
     cardCount: 837,
     priceCents: 1490,
     sampleCards: [
@@ -51,6 +52,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants DSCG / master CCA", "Auditeurs et consolideurs juniors"],
     topics: ["Normes IAS", "Normes IFRS", "Objectifs et champs d'application"],
+    cardLanguages: ["fr"],
     cardCount: 42,
     priceCents: 990,
     sampleCards: [
@@ -89,6 +91,7 @@ export const decks: Deck[] = [
       "Étudiants en master finance ou CCA visant ces métiers",
     ],
     topics: ["Classification et évaluation", "Expected credit losses", "Risque de crédit"],
+    cardLanguages: ["en"],
     cardCount: 691,
     priceCents: 4490,
     sampleCards: [
@@ -124,6 +127,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Équipes normes, trésorerie et consolidation", "Auditeurs sur des groupes couverts"],
     topics: ["Désignations de couverture", "Cash flow hedge", "Cost of hedging"],
+    cardLanguages: ["en"],
     cardCount: 409,
     priceCents: 3990,
     sampleCards: [
@@ -159,6 +163,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Étudiants en finance, comptabilité, école de commerce", "Candidats aux entretiens finance"],
     topics: ["Rentabilité", "Marges", "Structure et liquidité"],
+    cardLanguages: ["fr"],
     cardCount: 28,
     priceCents: 790,
     sampleCards: [

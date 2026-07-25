@@ -28,6 +28,7 @@ export const deck: Deck = {
     "Organisations et gouvernance mondiale",
     "Espaces maritimes, énergie, ressources",
   ],
+  cardLanguages: ["fr"],
   cardCount: 390,
   priceCents: 2400,
   sampleCards: [

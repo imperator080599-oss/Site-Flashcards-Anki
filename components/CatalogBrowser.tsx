@@ -2,18 +2,17 @@
 
 import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import type { Category, Deck } from "@/content/types";
+import type { Category, CardLanguage, Deck } from "@/content/types";
 import { DeckCard } from "@/components/DeckCard";
+import {
+  filterableLanguages,
+  languageName,
+  matchesLanguage,
+} from "@/lib/cardLanguages";
+import { defaultLocale, type Locale } from "@/lib/i18n";
+import { t } from "@/content/i18n/ui";
 
 type SortKey = "recent" | "price-asc" | "price-desc" | "cards-desc" | "title";
-
-const sortLabels: Record<SortKey, string> = {
-  recent: "Plus récents",
-  "price-asc": "Prix croissant",
-  "price-desc": "Prix décroissant",
-  "cards-desc": "Nombre de cartes",
-  title: "Ordre alphabétique",
-};
 
 function normalize(s: string): string {
   return s
@@ -25,16 +24,31 @@ function normalize(s: string): string {
 export function CatalogBrowser({
   decks,
   categories,
+  locale = defaultLocale,
 }: {
   decks: Deck[];
   categories: Category[];
+  locale?: Locale;
 }) {
+  const ui = t(locale);
   const searchParams = useSearchParams();
-  const initialCategory = searchParams.get("categorie") ?? "all";
+  const initialCategory =
+    searchParams.get("categorie") ?? searchParams.get("category") ?? "all";
+  const initialLanguage = searchParams.get("langue") ?? searchParams.get("lang") ?? "all";
 
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState(initialCategory);
+  const [language, setLanguage] = useState(initialLanguage);
   const [sort, setSort] = useState<SortKey>("recent");
+
+  // Ne proposer que les langues réellement présentes dans le catalogue.
+  const availableLanguages = useMemo(
+    () =>
+      filterableLanguages.filter((lang) =>
+        decks.some((d) => matchesLanguage(d.cardLanguages, lang))
+      ),
+    [decks]
+  );
 
   const results = useMemo(() => {
     const q = normalize(query.trim());
@@ -42,6 +56,11 @@ export function CatalogBrowser({
 
     if (category !== "all") {
       list = list.filter((d) => d.categorySlug === category);
+    }
+    if (language !== "all") {
+      list = list.filter((d) =>
+        matchesLanguage(d.cardLanguages, language as CardLanguage)
+      );
     }
     if (q) {
       list = list.filter((d) => {
@@ -67,37 +86,40 @@ export function CatalogBrowser({
         case "cards-desc":
           return b.cardCount - a.cardCount;
         case "title":
-          return a.title.localeCompare(b.title, "fr");
+          return a.title.localeCompare(b.title, locale);
         default:
           return b.publishedAt.localeCompare(a.publishedAt);
       }
     });
-  }, [decks, query, category, sort]);
+  }, [decks, query, category, language, sort, locale]);
+
+  const selectClass =
+    "h-10 w-full rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent sm:w-auto";
 
   return (
     <div>
-      {/* Barre d'outils : recherche, filtre, tri */}
-      <div className="flex flex-col gap-3 border-y border-line py-4 sm:flex-row sm:items-center">
+      {/* Barre d'outils : recherche, filtres, tri */}
+      <div className="flex flex-col gap-3 border-y border-line py-4 lg:flex-row lg:items-center">
         <label className="relative flex-1">
-          <span className="sr-only">Rechercher un deck</span>
+          <span className="sr-only">{ui.catalog.searchLabel}</span>
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Rechercher un deck, un thème, une épreuve…"
+            placeholder={ui.catalog.searchPlaceholder}
             className="h-10 w-full rounded-sm border border-line bg-card px-3.5 text-sm placeholder:text-faint focus:border-accent"
           />
         </label>
 
-        <div className="flex min-w-0 gap-3">
+        <div className="flex min-w-0 flex-wrap gap-3">
           <label className="min-w-0 flex-1 sm:flex-none">
-            <span className="sr-only">Filtrer par catégorie</span>
+            <span className="sr-only">{ui.catalog.categoryLabel}</span>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="h-10 w-full rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent sm:w-auto"
+              className={selectClass}
             >
-              <option value="all">Toutes les catégories</option>
+              <option value="all">{ui.catalog.allCategories}</option>
               {categories.map((c) => (
                 <option key={c.slug} value={c.slug}>
                   {c.name}
@@ -107,15 +129,31 @@ export function CatalogBrowser({
           </label>
 
           <label className="min-w-0 flex-1 sm:flex-none">
-            <span className="sr-only">Trier</span>
+            <span className="sr-only">{ui.catalog.languageLabel}</span>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value)}
+              className={selectClass}
+            >
+              <option value="all">{ui.catalog.allLanguages}</option>
+              {availableLanguages.map((lang) => (
+                <option key={lang} value={lang}>
+                  {ui.catalog.languageOption(languageName(lang, locale))}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <label className="min-w-0 flex-1 sm:flex-none">
+            <span className="sr-only">{ui.catalog.sortLabel}</span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as SortKey)}
-              className="h-10 w-full rounded-sm border border-line bg-card px-3 text-sm text-ink focus:border-accent sm:w-auto"
+              className={selectClass}
             >
-              {Object.entries(sortLabels).map(([key, label]) => (
+              {(Object.keys(ui.catalog.sort) as SortKey[]).map((key) => (
                 <option key={key} value={key}>
-                  {label}
+                  {ui.catalog.sort[key]}
                 </option>
               ))}
             </select>
@@ -124,33 +162,35 @@ export function CatalogBrowser({
       </div>
 
       <p className="mt-4 text-sm text-faint" role="status">
-        {results.length} deck{results.length > 1 ? "s" : ""}
+        {ui.catalog.results(results.length)}
         {category !== "all" &&
           ` — ${categories.find((c) => c.slug === category)?.name ?? ""}`}
+        {language !== "all" &&
+          ` — ${ui.catalog.languageOption(languageName(language as CardLanguage, locale))}`}
       </p>
 
       {results.length > 0 ? (
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {results.map((deck) => (
-            <DeckCard key={deck.slug} deck={deck} />
+            <DeckCard key={deck.slug} deck={deck} locale={locale} />
           ))}
         </div>
       ) : (
         <div className="mt-6 rounded-md border border-line bg-card px-6 py-16 text-center">
-          <p className="heading text-xl">Aucun deck ne correspond</p>
+          <p className="heading text-xl">{ui.catalog.emptyTitle}</p>
           <p className="mx-auto mt-2 max-w-sm text-sm text-soft">
-            Essayez d'autres mots-clés ou retirez le filtre de catégorie. Le
-            catalogue s'enrichit régulièrement.
+            {ui.catalog.emptyText}
           </p>
           <button
             type="button"
             onClick={() => {
               setQuery("");
               setCategory("all");
+              setLanguage("all");
             }}
             className="link-quiet mt-5 text-sm"
           >
-            Réinitialiser la recherche
+            {ui.catalog.reset}
           </button>
         </div>
       )}

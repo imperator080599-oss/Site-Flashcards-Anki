@@ -19,6 +19,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Lycéens et étudiants en chimie", "Enseignants et curieux"],
     topics: ["118 éléments", "Données IUPAC/CIAAW 2024"],
+    cardLanguages: ["fr"],
     cardCount: 118,
     priceCents: 690,
     sampleCards: [

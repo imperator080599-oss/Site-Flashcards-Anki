@@ -24,6 +24,7 @@ export const decks: Deck[] = [
       "Analystes en poste souhaitant consolider leur technique",
     ],
     topics: ["Comparable companies & precedent transactions", "DCF", "LBO analysis", "M&A sell-side / buy-side", "IPO"],
+    cardLanguages: ["en"],
     cardCount: 2330,
     priceCents: 7990,
     sampleCards: [
@@ -65,6 +66,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats aux stages et CDI en TS / FDD", "Auditeurs préparant un move vers le TS"],
     topics: ["Net debt & debt-like items", "Trapped cash", "Net working capital", "Equity bridge"],
+    cardLanguages: ["en"],
     cardCount: 284,
     priceCents: 4990,
     sampleCards: [
@@ -110,6 +112,7 @@ export const decks: Deck[] = [
     ],
     audience: ["Candidats aux stages TS/FDD en France", "Étudiants en master finance ou audit"],
     topics: ["Carve-out et détourage", "Procédures amiables", "Vocabulaire des deals"],
+    cardLanguages: ["fr"],
     cardCount: 51,
     priceCents: 1490,
     sampleCards: [

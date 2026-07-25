@@ -30,6 +30,7 @@ export const deck: Deck = {
     "Négociation et réunions",
     "Presse économique : tournures journalistiques",
   ],
+  cardLanguages: ["fr", "en"],
   cardCount: 800,
   priceCents: 1900,
   sampleCards: [

@@ -21,6 +21,13 @@ export interface Category {
   order: number;
 }
 
+/**
+ * Langue du contenu des cartes (et non de la page produit).
+ * Un deck de langue vivante en contient deux : ["fr", "es"] = recto français,
+ * verso espagnol.
+ */
+export type CardLanguage = "fr" | "en" | "es" | "vi" | "la";
+
 export interface SampleCard {
   front: string;
   back: string;
@@ -53,6 +60,12 @@ export interface Deck {
   objectives: string[];
   audience: string[];
   topics: string[];
+  /**
+   * Langue(s) du contenu des cartes, la dominante en premier. Affiché en
+   * badge et filtrable dans le catalogue : un acheteur doit savoir avant de
+   * payer s'il achète des cartes en français ou en anglais.
+   */
+  cardLanguages: CardLanguage[];
   cardCount: number;
   /** Prix TTC en centimes d'euro. */
   priceCents: number;

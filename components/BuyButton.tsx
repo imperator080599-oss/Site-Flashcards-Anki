@@ -5,14 +5,19 @@ import { Button } from "@/components/ui/Button";
 import { CommerceError, createCheckout } from "@/lib/commerce";
 import { COMMERCE_ENABLED } from "@/lib/site";
 import { formatPrice } from "@/lib/format";
+import { defaultLocale, path, type Locale } from "@/lib/i18n";
+import { t } from "@/content/i18n/ui";
 
 export function BuyButton({
   deckSlug,
   priceCents,
+  locale = defaultLocale,
 }: {
   deckSlug: string;
   priceCents: number;
+  locale?: Locale;
 }) {
+  const ui = t(locale);
   const [state, setState] = useState<"idle" | "loading" | "error">("idle");
   const [error, setError] = useState<string | null>(null);
 
@@ -20,21 +25,23 @@ export function BuyButton({
     setState("loading");
     setError(null);
     try {
-      // Les URLs de retour pointent vers la page courante du site déployé.
-      const origin = window.location.origin;
-      const base = window.location.pathname.replace(/decks\/.*/, "");
+      // URL de retour : page de remerciement de la langue courante, sur ce
+      // déploiement (le site peut vivre sous un sous-chemin).
+      const { origin, pathname, href } = window.location;
+      const decksSegment = path("decks", locale);
+      const base = pathname.slice(0, pathname.indexOf(decksSegment));
+      const thanks = `${origin}${base}${path("thanks", locale)}`;
       const { url } = await createCheckout(
         deckSlug,
-        `${origin}${base}merci/?session_id={CHECKOUT_SESSION_ID}`,
-        window.location.href
+        `${thanks}?session_id={CHECKOUT_SESSION_ID}`,
+        href,
+        locale
       );
       window.location.href = url;
     } catch (e) {
       setState("error");
       setError(
-        e instanceof CommerceError
-          ? e.message
-          : "Une erreur est survenue. Réessayez dans un instant."
+        e instanceof CommerceError ? e.localizedMessage(locale) : ui.buy.genericError
       );
     }
   }
@@ -43,12 +50,9 @@ export function BuyButton({
     return (
       <div>
         <Button size="lg" disabled className="w-full sm:w-auto">
-          Acheter — {formatPrice(priceCents)}
+          {ui.buy.label(formatPrice(priceCents, locale))}
         </Button>
-        <p className="mt-3 text-sm text-soft">
-          La boutique ouvre très prochainement. Le paiement en ligne n'est pas
-          encore activé sur cette version du site.
-        </p>
+        <p className="mt-3 text-sm text-soft">{ui.buy.disabledNote}</p>
       </div>
     );
   }
@@ -63,12 +67,10 @@ export function BuyButton({
         aria-busy={state === "loading"}
       >
         {state === "loading"
-          ? "Redirection vers le paiement…"
-          : `Acheter — ${formatPrice(priceCents)}`}
+          ? ui.buy.loading
+          : ui.buy.label(formatPrice(priceCents, locale))}
       </Button>
-      <p className="mt-3 text-xs text-faint">
-        Paiement sécurisé par Stripe · Téléchargement immédiat
-      </p>
+      <p className="mt-3 text-xs text-faint">{ui.buy.reassurance}</p>
       {state === "error" && error && (
         <p
           role="alert"

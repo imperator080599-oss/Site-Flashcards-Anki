@@ -28,6 +28,7 @@ export const deck: Deck = {
     "M&A : accretion/dilution, synergies, structures d'offre",
     "LBO : mécanique, returns, exit",
   ],
+  cardLanguages: ["fr"],
   cardCount: 520,
   priceCents: 4900,
   sampleCards: [

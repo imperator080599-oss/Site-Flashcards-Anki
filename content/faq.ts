@@ -18,6 +18,11 @@ export const homeFaq: AccordionItem[] = [
       "Ouvrez Anki, puis Fichier → Importer et sélectionnez le fichier .apkg téléchargé (ou double-cliquez simplement sur le fichier). Le deck apparaît avec sa structure et ses cartes, prêt à réviser.",
   },
   {
+    question: "Les cartes sont-elles en français ou en anglais ?",
+    answer:
+      "Cela dépend du deck, et c'est toujours indiqué : chaque deck porte un badge de langue des cartes (« Cartes en français », « Cartes en anglais », ou une paire bilingue comme « FR ⇄ ES »), visible dans le catalogue comme sur la fiche produit. Le catalogue est aussi filtrable par langue des cartes. Les decks Investment Banking, FDD, Excel, IFRS 9 et l'anglais des affaires du DSCG sont rédigés en anglais ; les decks de concours français sont en français.",
+  },
+  {
     question: "Les decks sont-ils mis à jour ?",
     answer:
       "Oui. Lorsqu'un deck est amélioré (corrections, ajouts, mise à jour d'un programme), la nouvelle version est proposée au téléchargement via votre lien d'achat.",
@@ -53,6 +58,26 @@ export const fullFaq: { section: string; items: AccordionItem[] }[] = [
         question: "Combien de temps faut-il y consacrer chaque jour ?",
         answer:
           "En rythme de croisière, 10 à 30 minutes par jour suffisent pour la plupart des decks. Anki ne vous montre que les cartes arrivées à échéance : la charge quotidienne reste maîtrisée si vous êtes régulier.",
+      },
+    ],
+  },
+  {
+    section: "Langue des cartes",
+    items: [
+      {
+        question: "Les cartes sont-elles en français ou en anglais ?",
+        answer:
+          "Les deux, selon le deck — et c'est toujours annoncé avant l'achat. Chaque deck porte un badge de langue des cartes (« Cartes en français », « Cartes en anglais », ou une paire bilingue comme « FR ⇄ EN »), affiché sur la carte du catalogue et sur la fiche produit. Les decks Investment Banking, Financial Due Diligence, Excel, IFRS 9 et l'anglais des affaires du DSCG sont rédigés intégralement en anglais. Les decks de concours français (DSCG finance, plan comptable, HGG) et de culture générale sont en français.",
+      },
+      {
+        question: "Puis-je filtrer le catalogue par langue des cartes ?",
+        answer:
+          "Oui. Le catalogue propose un sélecteur « Filtrer par langue des cartes » : choisissez l'anglais et vous ne voyez que les decks dont les cartes sont en anglais. Les decks bilingues apparaissent sous chacune de leurs deux langues.",
+      },
+      {
+        question: "Le site existe-t-il en anglais ?",
+        answer:
+          "Oui : une version anglaise complète du site est disponible sous /en/, accessible depuis le sélecteur de langue en haut de page. Elle traduit la boutique (navigation, fiches produit, paiement, informations légales) — le contenu des cartes, lui, reste dans sa langue d'origine, ce qui est précisément la raison d'être du badge de langue.",
       },
     ],
   },
