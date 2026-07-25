@@ -78,6 +78,13 @@ jobs:
       # Slug volontairement inexistant : vérifie que la fonction et la base
       # répondent (404 attendu, 503 tant que Stripe n'est pas configuré)
       # sans créer de session Stripe à chaque push.
+      #
+      # Un 400 ici signifie que la fonction déployée refuse l'URL de retour :
+      # son allowlist ne contient pas encore le domaine du site. C'est le
+      # symptôme d'un changement d'adresse (renommage de compte, domaine
+      # personnalisé) et cela casse le paiement pour de vrais acheteurs.
+      # Correctif : Supabase > Edge Functions > Secrets > SITE_URL =
+      # liste des origines autorisées, séparées par des virgules.
       - name: create-checkout répond (404 slug inconnu, ou 503 avant Stripe)
         run: |
           code=$(curl -s -o /tmp/r.json -w "%{http_code}" -X POST \
@@ -86,6 +93,11 @@ jobs:
             -H "Content-Type: application/json" \
             -d '{"deckSlug":"smoke-test-deck-inexistant","successUrl":"https://imperator080599.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599.github.io/Site-Flashcards-Anki/decks/"}')
           cat /tmp/r.json; echo
+          if [ "$code" = "400" ]; then
+            echo "::error::create-checkout refuse l'URL de retour ($NEXT_PUBLIC_SITE_URL)."
+            echo "::error::Le paiement est cassé pour les acheteurs. Définissez le secret SITE_URL de la fonction avec cette origine."
+            exit 1
+          fi
           [ "$code" = "404" ] || [ "$code" = "503" ] || { echo "Code inattendu: $code"; exit 1; }
       - name: download rejette un jeton invalide (400)
         run: |
