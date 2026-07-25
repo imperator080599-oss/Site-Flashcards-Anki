@@ -12,6 +12,7 @@
  * pour ne pas casser l'historique des commandes.
  */
 import { allDecks } from "../content/decks";
+import { decksEn } from "../content/i18n/decks.en";
 
 const SUPABASE_URL = process.env.SUPABASE_URL?.replace(/\/$/, "");
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -26,6 +27,8 @@ if (!SUPABASE_URL || !SERVICE_KEY) {
 const rows = allDecks.map((deck) => ({
   slug: deck.slug,
   title: deck.title,
+  // Titre anglais : affiché à l'achat quand l'acheteur navigue sur /en/.
+  title_en: decksEn[deck.slug]?.title ?? null,
   price_cents: deck.priceCents,
   currency: "eur",
   storage_path: `${deck.slug}.apkg`,

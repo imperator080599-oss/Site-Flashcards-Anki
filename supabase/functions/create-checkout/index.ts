@@ -65,7 +65,12 @@ Deno.serve(async (req) => {
     });
   }
 
-  let body: { deckSlug?: unknown; successUrl?: unknown; cancelUrl?: unknown };
+  let body: {
+    deckSlug?: unknown;
+    successUrl?: unknown;
+    cancelUrl?: unknown;
+    locale?: unknown;
+  };
   try {
     body = await req.json();
   } catch {
@@ -73,6 +78,8 @@ Deno.serve(async (req) => {
   }
 
   const { deckSlug, successUrl, cancelUrl } = body;
+  // Langue de la boutique : pilote l'interface Stripe et le libellé produit.
+  const locale = body.locale === "en" ? "en" : "fr";
   if (typeof deckSlug !== "string" || !SLUG_RE.test(deckSlug)) {
     return json(400, { error: "Deck invalide.", code: "invalid" });
   }
@@ -86,7 +93,7 @@ Deno.serve(async (req) => {
 
   const { data: deck, error: deckError } = await supabase
     .from("decks")
-    .select("slug, title, price_cents, currency")
+    .select("slug, title, title_en, price_cents, currency")
     .eq("slug", deckSlug)
     .eq("active", true)
     .single();
@@ -94,6 +101,14 @@ Deno.serve(async (req) => {
   if (deckError || !deck) {
     return json(404, { error: "Ce deck n'est pas disponible.", code: "not_found" });
   }
+
+  // Le titre anglais est facultatif : on retombe sur le titre français.
+  const productName =
+    (locale === "en" ? (deck.title_en as string | null) : null) ?? deck.title;
+  const productDescription =
+    locale === "en"
+      ? "Anki flashcard deck (.apkg file, instant download)"
+      : "Deck de flashcards Anki (fichier .apkg, téléchargement immédiat)";
 
   // Création de la session Checkout via l'API REST Stripe.
   const params = new URLSearchParams({
@@ -103,10 +118,11 @@ Deno.serve(async (req) => {
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": deck.currency,
     "line_items[0][price_data][unit_amount]": String(deck.price_cents),
-    "line_items[0][price_data][product_data][name]": deck.title,
-    "line_items[0][price_data][product_data][description]":
-      "Deck de flashcards Anki (fichier .apkg, téléchargement immédiat)",
+    "line_items[0][price_data][product_data][name]": productName,
+    "line_items[0][price_data][product_data][description]": productDescription,
+    locale,
     "metadata[deck_slug]": deck.slug,
+    "metadata[locale]": locale,
     "payment_intent_data[description]": `Deck Anki : ${deck.title}`,
   });
 

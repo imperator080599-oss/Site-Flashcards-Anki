@@ -108,6 +108,34 @@ retire avec `demo: false`.
 Ajouter une entrée dans `content/categories.ts` : la page catégorie, la
 navigation, les filtres et le sitemap la prennent en compte automatiquement.
 
+## Bilingue (français / anglais)
+
+Le français vit à la racine (`/decks/…`), l'anglais sous `/en/` (`/en/decks/…`).
+Les deux langues partagent les mêmes `slug`, donc la même fiche produit et la
+même ligne en base : seul le texte change.
+
+- **Routage** : `lib/i18n.ts` est la source unique des chemins par langue
+  (`path()`, `deckPath()`, `alternatePath()`). Un groupe de routes par langue
+  (`app/(fr)`, `app/(en)`) donne à chacune son propre layout racine, donc le
+  bon `<html lang>`. Les `hreflang` et le sitemap bilingue en découlent.
+- **Interface** : `content/i18n/ui.ts`. Le dictionnaire français fait foi et
+  `UiDict` en dérive : oublier une clé anglaise casse la compilation.
+- **Contenu** : `content/i18n/decks.en.ts`, `categories.en.ts`, `faq.en.ts`.
+  Une traduction absente retombe silencieusement sur le français, donc un
+  deck ajouté sans traduction reste vendable.
+- **Prose** (méthode, pages légales) : un composant par langue plutôt qu'un
+  gabarit à trous — voir `components/views/MethodView.tsx` et `LegalEn.tsx`.
+  Les pages légales anglaises portent une clause de primauté du français.
+
+### Langue des cartes
+
+À ne pas confondre avec la langue du site : `cardLanguages` (dans le type
+`Deck`) décrit la langue du **contenu des cartes**, par exemple `["en"]` ou
+`["fr", "es"]` pour un deck bilingue. Elle alimente le badge des cartes du
+catalogue, la ligne « Langue des cartes » de la fiche produit et le filtre du
+catalogue ; un deck bilingue apparaît sous chacune de ses deux langues.
+C'est une information d'achat : elle doit être exacte.
+
 ## Paiement et webhook Stripe
 
 1. Créer le produit côté Stripe n'est **pas** nécessaire : les sessions

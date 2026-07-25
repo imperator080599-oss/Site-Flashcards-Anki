@@ -8,10 +8,94 @@ const SIGNED_URL_TTL_SECONDS = 120;
 const UUID_RE =
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+type Lang = "fr" | "en";
+
+/** Messages d'erreur, dans la langue de la boutique où l'achat a eu lieu. */
+const MESSAGES: Record<
+  string,
+  Record<Lang, { title: string; message: string }>
+> = {
+  method: {
+    fr: {
+      title: "Méthode non autorisée",
+      message: "Utilisez le lien fourni après votre achat.",
+    },
+    en: {
+      title: "Method not allowed",
+      message: "Use the link provided after your purchase.",
+    },
+  },
+  invalid: {
+    fr: {
+      title: "Lien invalide",
+      message:
+        "Ce lien de téléchargement est incomplet ou mal formé. Utilisez le lien exact fourni après votre achat.",
+    },
+    en: {
+      title: "Invalid link",
+      message:
+        "This download link is incomplete or malformed. Use the exact link provided after your purchase.",
+    },
+  },
+  unknown: {
+    fr: {
+      title: "Lien inconnu",
+      message:
+        "Ce lien ne correspond à aucun achat confirmé. Si vous venez de payer, patientez quelques secondes puis réessayez.",
+    },
+    en: {
+      title: "Unknown link",
+      message:
+        "This link does not match any confirmed purchase. If you have just paid, wait a few seconds and try again.",
+    },
+  },
+  expired: {
+    fr: {
+      title: "Lien expiré",
+      message:
+        "Ce lien de téléchargement a expiré. Contactez-nous avec votre e-mail d'achat pour en recevoir un nouveau.",
+    },
+    en: {
+      title: "Link expired",
+      message:
+        "This download link has expired. Contact us with your purchase e-mail to receive a new one.",
+    },
+  },
+  limit: {
+    fr: {
+      title: "Limite atteinte",
+      message:
+        "Le nombre maximal de téléchargements pour ce lien est atteint. Contactez-nous avec votre e-mail d'achat.",
+    },
+    en: {
+      title: "Limit reached",
+      message:
+        "The maximum number of downloads for this link has been reached. Contact us with your purchase e-mail.",
+    },
+  },
+  preparing: {
+    fr: {
+      title: "Fichier en préparation",
+      message:
+        "Le fichier de ce deck est en cours de mise en ligne. Réessayez sous peu ou contactez-nous.",
+    },
+    en: {
+      title: "File being prepared",
+      message:
+        "This deck's file is still being uploaded. Try again shortly or contact us.",
+    },
+  },
+  internal: {
+    fr: { title: "Erreur interne", message: "Réessayez dans un instant." },
+    en: { title: "Internal error", message: "Please try again in a moment." },
+  },
+};
+
 /** Page d'erreur lisible (le lien est ouvert directement dans le navigateur). */
-function errorPage(status: number, title: string, message: string): Response {
+function errorPage(status: number, key: string, lang: Lang): Response {
+  const { title, message } = MESSAGES[key][lang];
   const html = `<!doctype html>
-<html lang="fr"><head><meta charset="utf-8">
+<html lang="${lang}"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>${title}</title>
@@ -30,17 +114,16 @@ function errorPage(status: number, title: string, message: string): Response {
 }
 
 Deno.serve(async (req) => {
+  const url = new URL(req.url);
+  const lang: Lang = url.searchParams.get("lang") === "en" ? "en" : "fr";
+
   if (req.method !== "GET") {
-    return errorPage(405, "Méthode non autorisée", "Utilisez le lien fourni après votre achat.");
+    return errorPage(405, "method", lang);
   }
 
-  const token = new URL(req.url).searchParams.get("token") ?? "";
+  const token = url.searchParams.get("token") ?? "";
   if (!UUID_RE.test(token)) {
-    return errorPage(
-      400,
-      "Lien invalide",
-      "Ce lien de téléchargement est incomplet ou mal formé. Utilisez le lien exact fourni après votre achat."
-    );
+    return errorPage(400, "invalid", lang);
   }
 
   const supabase = createClient(
@@ -57,36 +140,20 @@ Deno.serve(async (req) => {
     .maybeSingle();
 
   if (!record || record.orders?.status !== "paid") {
-    return errorPage(
-      404,
-      "Lien inconnu",
-      "Ce lien ne correspond à aucun achat confirmé. Si vous venez de payer, patientez quelques secondes puis réessayez."
-    );
+    return errorPage(404, "unknown", lang);
   }
 
   if (new Date(record.expires_at).getTime() < Date.now()) {
-    return errorPage(
-      410,
-      "Lien expiré",
-      "Ce lien de téléchargement a expiré. Contactez-nous avec votre e-mail d'achat pour en recevoir un nouveau."
-    );
+    return errorPage(410, "expired", lang);
   }
 
   if (record.download_count >= record.max_downloads) {
-    return errorPage(
-      429,
-      "Limite atteinte",
-      "Le nombre maximal de téléchargements pour ce lien est atteint. Contactez-nous avec votre e-mail d'achat."
-    );
+    return errorPage(429, "limit", lang);
   }
 
   const storagePath = record.decks?.storage_path;
   if (!storagePath) {
-    return errorPage(
-      503,
-      "Fichier en préparation",
-      "Le fichier de ce deck est en cours de mise en ligne. Réessayez sous peu ou contactez-nous."
-    );
+    return errorPage(503, "preparing", lang);
   }
 
   const { error: countError } = await supabase
@@ -105,7 +172,7 @@ Deno.serve(async (req) => {
 
   if (signError || !signed?.signedUrl) {
     console.error("Sign error:", signError?.message);
-    return errorPage(500, "Erreur interne", "Réessayez dans un instant.");
+    return errorPage(500, "internal", lang);
   }
 
   return new Response(null, {

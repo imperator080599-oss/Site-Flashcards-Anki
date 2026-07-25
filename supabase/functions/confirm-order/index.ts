@@ -38,6 +38,17 @@ async function getSecret(
 }
 
 
+/** Titre du deck dans la langue de l'acheteur (repli sur le français). */
+function localizedTitle(
+  deck: { title?: string | null; title_en?: string | null } | null,
+  locale: "fr" | "en",
+  fallback: string
+): string {
+  if (!deck) return fallback;
+  if (locale === "en" && deck.title_en) return deck.title_en;
+  return deck.title ?? fallback;
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { status: 204, headers: CORS_HEADERS });
@@ -59,13 +70,14 @@ Deno.serve(async (req) => {
     });
   }
 
-  let body: { sessionId?: unknown };
+  let body: { sessionId?: unknown; locale?: unknown };
   try {
     body = await req.json();
   } catch {
     return json(400, { error: "Requête invalide.", code: "invalid" });
   }
   const sessionId = body.sessionId;
+  const locale = body.locale === "en" ? "en" : "fr";
   if (typeof sessionId !== "string" || !SESSION_RE.test(sessionId)) {
     return json(400, { error: "Référence de commande invalide.", code: "invalid" });
   }
@@ -87,7 +99,7 @@ Deno.serve(async (req) => {
 
   const { data: deck } = await supabase
     .from("decks")
-    .select("slug, title")
+    .select("slug, title, title_en")
     .eq("slug", deckSlug)
     .single();
 
@@ -95,7 +107,7 @@ Deno.serve(async (req) => {
     return json(200, {
       status: "pending",
       deckSlug,
-      deckTitle: deck?.title ?? deckSlug,
+      deckTitle: localizedTitle(deck, locale, deckSlug),
       email: null,
       downloadToken: null,
       expiresAt: null,
@@ -145,7 +157,7 @@ Deno.serve(async (req) => {
   return json(200, {
     status: "paid",
     deckSlug,
-    deckTitle: deck?.title ?? deckSlug,
+    deckTitle: localizedTitle(deck, locale, deckSlug),
     email: session.customer_details?.email ?? null,
     downloadToken: token?.token ?? null,
     expiresAt: token?.expires_at ?? null,

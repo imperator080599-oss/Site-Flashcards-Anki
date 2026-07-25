@@ -82,7 +82,27 @@ Deux points de vigilance :
       Settings → Emails → « Successful payments »)
 - [ ] Lien de téléchargement : réutilisable, puis expire comme prévu
 
-## 5. Optionnel, quand vous voulez
+## 5. Finaliser la version anglaise côté serveur (~5 min)
+
+Le site est bilingue et pleinement fonctionnel en l'état : un acheteur
+anglophone peut acheter et télécharger normalement. Restent deux finitions
+qui demandent un accès en écriture au projet Supabase — le code est écrit et
+versionné, il n'attend que d'être appliqué :
+
+1. **Migration** : exécutez `supabase/migrations/0003_deck_title_en.sql` dans
+   https://supabase.com/dashboard/project/qgmtqxnopnffzcnigcpv/sql
+   (ajoute la colonne `title_en` et y écrit les 28 titres anglais).
+2. **Fonctions** : redéployez `create-checkout`, `confirm-order` et
+   `download` depuis `supabase/functions/` (Dashboard → Edge Functions, ou
+   `supabase functions deploy <nom>`).
+
+Effet : la page de paiement Stripe s'affiche en anglais avec le titre du deck
+en anglais, la confirmation reprend ce titre, et les pages d'erreur de
+téléchargement (lien expiré, quota atteint) sont traduites. Sans cette
+étape, ces trois écrans restent en français — le reste du parcours anglais
+fonctionne déjà.
+
+## 6. Optionnel, quand vous voulez
 
 - **Hébergement Vercel** (URL plus courte, sans sous-chemin) : dans votre
   dashboard Vercel, projet `rappel-anki` → Settings → Git → connectez le
