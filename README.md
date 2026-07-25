@@ -4,7 +4,7 @@ Site e-commerce minimaliste et premium dédié à la vente de decks de
 flashcards Anki (prépa ECG, DCG, DSCG, langues, Excel, Investment Banking,
 Financial Due Diligence, CFA).
 
-**Production** : https://imperator080599-oss.github.io/Site-Flashcards-Anki/
+**Production** : https://imperator080599.github.io/Site-Flashcards-Anki/
 
 > « Rappel » est un nom de marque provisoire : tout est centralisé dans
 > `lib/site.ts` (`SITE_NAME`) pour le changer en une ligne.

@@ -52,7 +52,11 @@ Deno.serve(async (req) => {
   // secret SITE_URL (liste séparée par des virgules — domaine personnalisé).
   const allowedOrigins = (
     Deno.env.get("SITE_URL") ??
-    "https://rappel-anki.vercel.app,https://imperator080599-oss.github.io/Site-Flashcards-Anki"
+    "https://imperator080599.github.io/Site-Flashcards-Anki," +
+      // Ancien identifiant GitHub, encore redirigé : évite de casser
+      // un paiement lancé depuis un lien déjà partagé.
+      "https://imperator080599-oss.github.io/Site-Flashcards-Anki," +
+      "https://rappel-anki.vercel.app"
   )
     .split(",")
     .map((u) => u.trim().replace(/\/$/, ""))

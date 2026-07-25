@@ -1,8 +1,31 @@
 # Checklist de lancement — actions qui vous reviennent
 
 Le site est **en ligne et encaisse réellement** :
-https://imperator080599-oss.github.io/Site-Flashcards-Anki/
+https://imperator080599.github.io/Site-Flashcards-Anki/
 (déploiement automatique à chaque push sur la branche).
+
+> ## ⚠️ À faire en priorité : votre compte GitHub a été renommé
+>
+> `imperator080599-oss` est devenu `imperator080599`, donc **l'URL du site a
+> changé**. Le dépôt est à jour (canonical, sitemap, hreflang pointent
+> désormais vers la nouvelle adresse), mais deux réglages extérieurs au code
+> doivent être repris, sinon :
+>
+> 1. **Le paiement échoue depuis la nouvelle URL.** La fonction
+>    `create-checkout` n'autorise les retours de paiement que vers une liste
+>    d'adresses, et celle qui est déployée contient encore l'ancienne.
+>    **Correctif sans redéploiement** : Supabase → Edge Functions → Secrets →
+>    ajoutez `SITE_URL` avec la valeur
+>    `https://imperator080599.github.io/Site-Flashcards-Anki,https://imperator080599-oss.github.io/Site-Flashcards-Anki`
+>    (les deux adresses, séparées par une virgule, sans slash final).
+> 2. **Google Search Console suit l'ancienne adresse.** Ajoutez une nouvelle
+>    propriété « Préfixe d'URL » sur
+>    `https://imperator080599.github.io/Site-Flashcards-Anki/`, revérifiez
+>    (le fichier `google1848307294717ee0.html` est toujours servi), puis
+>    soumettez à nouveau `sitemap.xml`.
+>
+> Tant que le point 1 n'est pas fait, **testez un achat** avant de
+> communiquer sur le site.
 
 > **État au 20/07/2026** : Stripe est en mode **live** — la clé `sk_live_…`
 > et le secret du webhook live (`we_1TvLnwDM4eYIOmUoxceSQO0K`, événements

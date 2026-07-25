@@ -19,7 +19,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  NEXT_PUBLIC_SITE_URL: https://imperator080599-oss.github.io/Site-Flashcards-Anki
+  NEXT_PUBLIC_SITE_URL: https://imperator080599.github.io/Site-Flashcards-Anki
   NEXT_PUBLIC_BASE_PATH: /Site-Flashcards-Anki
   NEXT_PUBLIC_CONTACT_EMAIL: imperator080599@gmail.com
   # Valeurs publiques par conception (embarquées dans le bundle client).
@@ -84,7 +84,7 @@ jobs:
             "$NEXT_PUBLIC_SUPABASE_URL/functions/v1/create-checkout" \
             -H "Authorization: Bearer $NEXT_PUBLIC_SUPABASE_ANON_KEY" \
             -H "Content-Type: application/json" \
-            -d '{"deckSlug":"smoke-test-deck-inexistant","successUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599-oss.github.io/Site-Flashcards-Anki/decks/"}')
+            -d '{"deckSlug":"smoke-test-deck-inexistant","successUrl":"https://imperator080599.github.io/Site-Flashcards-Anki/merci/","cancelUrl":"https://imperator080599.github.io/Site-Flashcards-Anki/decks/"}')
           cat /tmp/r.json; echo
           [ "$code" = "404" ] || [ "$code" = "503" ] || { echo "Code inattendu: $code"; exit 1; }
       - name: download rejette un jeton invalide (400)
