@@ -31,7 +31,10 @@ const rows = allDecks.map((deck) => ({
   title_en: decksEn[deck.slug]?.title ?? null,
   price_cents: deck.priceCents,
   currency: "eur",
-  storage_path: `${deck.slug}.apkg`,
+  // Les fichiers importés depuis le Drive de l'éditeur vivent tous sous
+  // `drive/` dans le bucket privé. Ce préfixe doit rester identique à
+  // l'emplacement réel, sinon la fonction `download` ne trouve plus rien.
+  storage_path: `drive/${deck.slug}.apkg`,
   active: !deck.draft,
   updated_at: new Date().toISOString(),
 }));

@@ -50,11 +50,11 @@ https://imperator080599.github.io/Site-Flashcards-Anki/
 2. Dashboard Stripe → **Developers → API keys** : copiez la **clé secrète**
    (`sk_test_…` pour tester, `sk_live_…` pour encaisser).
 3. Dashboard Stripe → **Developers → Webhooks → Add endpoint** :
-   - URL : `https://qgmtqxnopnffzcnigcpv.supabase.co/functions/v1/stripe-webhook`
+   - URL : `https://idefatdlpdqlcshakejp.supabase.co/functions/v1/stripe-webhook`
    - Événements : `checkout.session.completed` et
      `checkout.session.async_payment_succeeded`
    - Copiez le **signing secret** (`whsec_…`).
-4. https://supabase.com/dashboard/project/qgmtqxnopnffzcnigcpv/functions/secrets :
+4. https://supabase.com/dashboard/project/idefatdlpdqlcshakejp/functions/secrets :
    ajoutez :
    - `STRIPE_SECRET_KEY` = votre `sk_…`
    - `STRIPE_WEBHOOK_SECRET` = votre `whsec_…`
@@ -64,7 +64,7 @@ https://imperator080599.github.io/Site-Flashcards-Anki/
 
 ## 2. Téléverser les fichiers des decks (~5 min) — ✅ FAIT
 
-1. https://supabase.com/dashboard/project/qgmtqxnopnffzcnigcpv/storage/buckets/deck-files
+1. https://supabase.com/dashboard/project/idefatdlpdqlcshakejp/storage/buckets/deck-files
 2. Téléversez un fichier `.apkg` par deck, nommé exactement `<slug>.apkg`
    (ex. `dcg-ue9-comptabilite.apkg`). Pour générer les fichiers de
    démonstration actuels :
@@ -113,7 +113,7 @@ qui demandent un accès en écriture au projet Supabase — le code est écrit e
 versionné, il n'attend que d'être appliqué :
 
 1. **Migration** : exécutez `supabase/migrations/0003_deck_title_en.sql` dans
-   https://supabase.com/dashboard/project/qgmtqxnopnffzcnigcpv/sql
+   https://supabase.com/dashboard/project/idefatdlpdqlcshakejp/sql
    (ajoute la colonne `title_en` et y écrit les 28 titres anglais).
 2. **Fonctions** : redéployez `create-checkout`, `confirm-order` et
    `download` depuis `supabase/functions/` (Dashboard → Edge Functions, ou
@@ -130,8 +130,7 @@ fonctionne déjà.
 - **Hébergement Vercel** (URL plus courte, sans sous-chemin) : dans votre
   dashboard Vercel, projet `rappel-anki` → Settings → Git → connectez le
   dépôt GitHub `Site-Flashcards-Anki`. Vercel déploiera alors à chaque push,
-  comme GitHub Pages. (Le script `scripts/fetch-content.mjs` était un
-  mécanisme de dépannage, il n'est plus nécessaire.)
+  comme GitHub Pages.
 
 - **Domaine personnalisé** : Settings → Pages du dépôt GitHub → Custom
   domain ; puis mettez à jour `NEXT_PUBLIC_SITE_URL` / `NEXT_PUBLIC_BASE_PATH`

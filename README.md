@@ -15,7 +15,7 @@ Financial Due Diligence, CFA).
 | --- | --- | --- |
 | Frontend | Next.js 15 (App Router) + TypeScript + Tailwind CSS v4 | Site statique exporté (`output: "export"`) |
 | Hébergement | GitHub Pages via GitHub Actions | Build + déploiement à chaque push |
-| Backend | Supabase (projet `qgmtqxnopnffzcnigcpv`, région Paris) | Postgres, Storage privé, Edge Functions |
+| Backend | Supabase (projet `idefatdlpdqlcshakejp`, région Paris) | Postgres, Storage privé, Edge Functions |
 | Paiement | Stripe Checkout (page hébergée) | Aucun secret côté client |
 | Contenu | Fichiers TypeScript versionnés (`content/`) | « CMS git » : un deck = un fichier |
 
@@ -141,7 +141,7 @@ C'est une information d'achat : elle doit être exacte.
 1. Créer le produit côté Stripe n'est **pas** nécessaire : les sessions
    Checkout sont créées dynamiquement avec le prix lu en base.
 2. Configurer le webhook : Dashboard Stripe → Developers → Webhooks →
-   endpoint `https://qgmtqxnopnffzcnigcpv.supabase.co/functions/v1/stripe-webhook`,
+   endpoint `https://idefatdlpdqlcshakejp.supabase.co/functions/v1/stripe-webhook`,
    événement `checkout.session.completed` (+ `checkout.session.async_payment_succeeded`).
 3. Copier le `whsec_…` dans les secrets de la fonction (voir plus haut).
 
