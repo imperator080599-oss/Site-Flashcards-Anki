@@ -25,7 +25,7 @@ export const homeFaq: AccordionItem[] = [
   {
     question: "Les decks sont-ils mis à jour ?",
     answer:
-      "Oui. Lorsqu'un deck est amélioré (corrections, ajouts, mise à jour d'un programme), la nouvelle version est proposée au téléchargement via votre lien d'achat.",
+      "Les decks seront mis à jour si le contenu source a changé (exemple : nouvelle édition du livre). En revanche, ces mises à jour ne sont pas rétroactives : votre achat vous donne la version disponible au moment de l'achat, et non les versions publiées ensuite.",
   },
   {
     question: "Puis-je être remboursé ?",
@@ -58,6 +58,11 @@ export const fullFaq: { section: string; items: AccordionItem[] }[] = [
         question: "Combien de temps faut-il y consacrer chaque jour ?",
         answer:
           "En rythme de croisière, 10 à 30 minutes par jour suffisent pour la plupart des decks. Anki ne vous montre que les cartes arrivées à échéance : la charge quotidienne reste maîtrisée si vous êtes régulier.",
+      },
+      {
+        question: "Quels types de cartes utilisez-vous ?",
+        answer:
+          "Pour la plupart des decks, trois types de flashcards sont utilisés : Basic (question / réponse), Multiple-choice questions (QCM) et Cloze (texte à trous). Le type est choisi selon la notion : le Basic pour une définition ou un mécanisme, le QCM pour discriminer entre des cas proches, le Cloze pour une formule, une liste ou un article de norme dont il faut retenir les termes exacts.",
       },
     ],
   },
@@ -107,7 +112,7 @@ export const fullFaq: { section: string; items: AccordionItem[] }[] = [
       {
         question: "Les decks sont-ils mis à jour ?",
         answer:
-          "Oui. Les corrections et enrichissements sont inclus : lorsqu'une nouvelle version d'un deck que vous avez acheté paraît, vous pouvez la retélécharger via votre lien d'achat ou en nous contactant.",
+          "Les decks seront mis à jour si le contenu source a changé (exemple : nouvelle édition du livre). Ces mises à jour ne sont pas rétroactives : elles ne sont pas redistribuées aux acheteurs des versions précédentes. Ce que vous achetez, c'est la version du deck disponible au moment de votre commande — son contenu est décrit sur la fiche produit (nombre de cartes, structure, langue).",
       },
     ],
   },

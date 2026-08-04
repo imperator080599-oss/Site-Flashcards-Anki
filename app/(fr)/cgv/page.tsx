@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function CgvPage() {
   return (
-    <LegalPage title="Conditions générales de vente" updated="13 juillet 2026" locale="fr">
+    <LegalPage title="Conditions générales de vente" updated="4 août 2026" locale="fr">
       <h2>1. Objet et champ d'application</h2>
       <p>
         Les présentes conditions générales de vente (CGV) régissent les ventes
@@ -100,9 +100,13 @@ export default function CgvPage() {
 
       <h2>9. Mises à jour</h2>
       <p>
-        Les decks peuvent faire l'objet de mises à jour (corrections,
-        enrichissements, évolutions de programme). Les mises à jour d'un deck
-        acheté sont accessibles au Client sans surcoût.
+        Les decks peuvent faire l&rsquo;objet de mises à jour lorsque le contenu
+        source a changé (par exemple une nouvelle édition de l&rsquo;ouvrage
+        dont le deck est tiré). Ces mises à jour ne sont pas rétroactives : le
+        Client acquiert la version du deck disponible à la date de sa commande,
+        et les versions publiées ultérieurement ne lui sont pas redistribuées.
+        Aucun droit d&rsquo;accès aux versions futures n&rsquo;est inclus dans
+        le prix.
       </p>
 
       <h2>10. Responsabilité</h2>

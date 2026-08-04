@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function ConfidentialitePage() {
   return (
-    <LegalPage title="Politique de confidentialité" updated="13 juillet 2026" locale="fr">
+    <LegalPage title="Politique de confidentialité" updated="4 août 2026" locale="fr">
       <h2>Responsable du traitement</h2>
       <p>
         Le responsable du traitement des données collectées sur {SITE_NAME}{" "}
@@ -63,7 +63,8 @@ export default function ConfidentialitePage() {
       <h2>Durées de conservation</h2>
       <p>
         Les données de commande sont conservées pendant la durée nécessaire à
-        la fourniture du service (accès aux mises à jour du deck), puis
+        la fourniture du service (livraison du deck, réémission d&rsquo;un lien
+        de téléchargement expiré, support après-vente), puis
         archivées conformément aux obligations comptables et fiscales
         (10 ans pour les pièces comptables). Les échanges e-mail sont
         conservés au plus 3 ans après le dernier contact.

@@ -110,9 +110,17 @@ function MethodFr() {
             partie du programme isolément si besoin.
           </li>
           <li>
-            <strong>Mise à jour continue.</strong> Programmes et normes
-            évoluent ; les decks aussi. Les acheteurs bénéficient des mises à
-            jour de leur deck.
+            <strong>Trois types de cartes.</strong> La plupart des decks
+            combinent des cartes Basic (question / réponse), des QCM
+            (Multiple-choice questions) et des Cloze (texte à trous), selon ce
+            que la notion demande.
+          </li>
+          <li>
+            <strong>Decks mis à jour quand la source change.</strong> Les decks
+            sont mis à jour si le contenu source a changé — par exemple une
+            nouvelle édition du livre dont ils sont tirés. Ces mises à jour ne
+            sont pas rétroactives : un achat donne accès à la version en ligne
+            au moment de l&rsquo;achat, pas aux versions publiées ensuite.
           </li>
         </ul>
 
@@ -216,8 +224,16 @@ function MethodEn() {
             of the syllabus in isolation when you need to.
           </li>
           <li>
-            <strong>Continuous updates.</strong> Syllabuses and standards
-            evolve; so do the decks. Buyers get the updates to their deck.
+            <strong>Three card types.</strong> Most decks combine Basic cards
+            (question / answer), multiple-choice questions (MCQ) and Cloze
+            deletions, depending on what the material calls for.
+          </li>
+          <li>
+            <strong>Decks updated when the source changes.</strong> A deck is
+            updated when its source material changes — a new edition of the
+            book it is drawn from, for instance. Those updates are not
+            retroactive: a purchase gives you the version available at the time
+            of purchase, not the versions published afterwards.
           </li>
         </ul>
 

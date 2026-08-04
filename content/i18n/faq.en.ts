@@ -25,7 +25,7 @@ export const homeFaqEn: AccordionItem[] = [
   {
     question: "Are the decks updated?",
     answer:
-      "Yes. When a deck is improved (corrections, additions, a syllabus update), the new version is made available through your purchase link.",
+      "A deck is updated when its source material changes (for example, a new edition of the book it is drawn from). Those updates are not retroactive: your purchase gives you the version available at the time of your order, not the versions published afterwards.",
   },
   {
     question: "Can I get a refund?",
@@ -58,6 +58,11 @@ export const fullFaqEn: { section: string; items: AccordionItem[] }[] = [
         question: "How much time does it take each day?",
         answer:
           "Once you are up to speed, 10 to 30 minutes a day is enough for most decks. Anki only shows you the cards that are due, so the daily load stays manageable as long as you are regular.",
+      },
+      {
+        question: "What card types do you use?",
+        answer:
+          "Most decks use three flashcard types: Basic (question / answer), multiple-choice questions (MCQ) and Cloze deletions. The type follows the material: Basic for a definition or a mechanism, MCQ to tell close cases apart, Cloze for a formula, a list or a clause of a standard whose exact wording matters.",
       },
     ],
   },
@@ -107,7 +112,7 @@ export const fullFaqEn: { section: string; items: AccordionItem[] }[] = [
       {
         question: "Are the decks updated?",
         answer:
-          "Yes. Corrections and additions are included: when a new version of a deck you own is published, you can download it again through your purchase link or by contacting us.",
+          "A deck is updated when its source material changes (for example, a new edition of the book it is drawn from). Those updates are not retroactive: they are not redistributed to people who bought an earlier version. What you buy is the deck as it stands at the time of your order — its contents are described on the product page (number of cards, structure, language).",
       },
       {
         question: "Which currency do you charge in?",

@@ -19,7 +19,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <LegalPage title="Privacy policy" updated="22 July 2026" locale={locale}>
+    <LegalPage title="Privacy policy" updated="4 August 2026" locale={locale}>
       <PrivacyEn />
     </LegalPage>
   );

@@ -156,8 +156,12 @@ export function TermsEn() {
 
       <h2>9. Updates</h2>
       <p>
-        Decks may be updated (corrections, additions, syllabus changes). Updates
-        to a purchased deck are available to the Customer at no extra cost.
+        A deck may be updated when its source material changes (for example, a
+        new edition of the work it is drawn from). Such updates are not
+        retroactive: the Customer acquires the version of the deck available on
+        the date of their order, and versions published later are not
+        redistributed to them. No right of access to future versions is
+        included in the price.
       </p>
 
       <h2>10. Liability</h2>
@@ -244,8 +248,9 @@ export function PrivacyEn() {
 
       <h2>Retention periods</h2>
       <p>
-        Order data is kept for as long as needed to provide the service (access
-        to deck updates), then archived in line with accounting and tax
+        Order data is kept for as long as needed to provide the service
+        (delivering the deck, re-issuing an expired download link, after-sales
+        support), then archived in line with accounting and tax
         obligations (10 years for accounting records). E-mail exchanges are kept
         for at most 3 years after the last contact.
       </p>
