@@ -56,6 +56,9 @@ Deno.serve(async (req) => {
       // Ancien identifiant GitHub, encore redirigé : évite de casser
       // un paiement lancé depuis un lien déjà partagé.
       "https://imperator080599-oss.github.io/Site-Flashcards-Anki," +
+      // Hébergement Vercel : alias de production du projet rappel-anki.
+      "https://rappel-anki-imperator080599.vercel.app," +
+      "https://rappel-anki-imperator080599-oss-imperator080599.vercel.app," +
       "https://rappel-anki.vercel.app"
   )
     .split(",")
